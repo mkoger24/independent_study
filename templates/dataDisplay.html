@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+
+{% block imports %}
+<script type="text/javascript" defer src="{{ url_for('static', filename='js/search.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Books</h1>
+<label for="booksearch">Search:</label>
+<input type="text" name="booksearch" id="booksearch">
+<ul id="booklist">
+    {% for BookTitle in books %}
+    <li>{{ BookTitle }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
