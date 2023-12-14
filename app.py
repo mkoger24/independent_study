@@ -1,5 +1,13 @@
 from flask import Flask, render_template, request, send_file, redirect#, abortr
+import mysql.connector
 
+mydb = mysql.connector.connect( 
+    host = "localhost", 
+    user = "root", 
+    password = "password", 
+    database = "snbooks",
+    auth_plugin='mysql_native_password'
+    )
 
 app = Flask(__name__, template_folder='templates', static_folder='css')
 
@@ -22,11 +30,23 @@ def bookInfo():
 
 @app.route('/search.html', methods=['GET'])
 def displayData():
-    return render_template("search.html")
+    try: 
+        mycursor = mydb.cursor() 
+        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
+        db = mycursor.fetchall() 
+        return render_template("search.html", dbhtml = db)                                   
+    except Exception as e: 
+        return(str(e))
 
 @app.route('/search.html', methods=['GET'])
 def search():
-    return render_template("search.html")
+    try: 
+        mycursor = mydb.cursor() 
+        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
+        db = mycursor.fetchall() 
+        return render_template("search.html", dbhtml = db)                                   
+    except Exception as e: 
+        return(str(e))
 
 # @app.route('/', methods=['POST'])
 

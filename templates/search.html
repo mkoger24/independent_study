@@ -40,9 +40,25 @@
             <a href="login.html"><right class="active" href="login.html"><button type="button">Login</button></right></a>
         </div>
 
-        <table class="table">
-            <script src="script.js"></script>
+
+        <table align="center">
+            <tr align="center">
+                <td>Electronic ISBN</td>
+                <td>BookTitle</td>
+                <td>Author</td>
+            </tr>
+            {% for row in dbhtml %}
             <tr>
+                <td>{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+            </tr>
+            {% endfor %}
+            </table>
+
+        <!-- <table class="table"> -->
+            <!-- <script src="script.js"></script> -->
+            <!-- <tr>
                 <td>978-0-230-53778-1</td>
                 <td><a href="bookInfo.html">Charles Dickens, A Tale of Two Cities and the French Revolution</a></td>
                 <td>C. Jones, J. McDonagh, J. Mee</td>
@@ -150,7 +166,7 @@
                 <td>A. Zettersten</td>
                 <td>2011</td>
             </tr>
-          </table>
+          </table> -->
           <footer>
             <a>1 2 3 4 ... 35</a> next page</footer>
           
