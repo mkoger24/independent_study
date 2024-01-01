@@ -40,21 +40,30 @@
             <a href="login.html"><right class="active" href="login.html"><button type="button">Login</button></right></a>
         </div>
 
+        <script>
+        console.log("test")
+        </script>
 
         <table align="center">
             <tr align="center">
-                <td>Electronic ISBN</td>
-                <td>BookTitle</td>
-                <td>Author</td>
+                <th>Electronic ISBN</th>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Series Title</th>
+                <th>Product Type</th>
             </tr>
-            {% for row in dbhtml %}
-            <tr>
-                <td>{{row.0}}</td>
-                <td>{{row.1}}</td>
-                <td>{{row.2}}</td>
-            </tr>
-            {% endfor %}
-            </table>
+            echo "<table><tr><th>table headding</th></tr>";
+            while($row = $result->fetch_assoc()) {
+
+                echo    "<tr><td><strong>ISBN:</strong></td><td>" .$row["ElectronicISBN"]. "</td></tr>";
+                echo    "<tr><td><strong>BookTitle:</strong></td><td>" .$row["BookTitle"]."</td></tr>";
+                echo    "<tr><td><strong>Author:</strong></td><td>" .$row["Author"]. "</td></tr>";
+                echo    "<tr><td><strong>Series Title:</strong></td><td>" .$row["SeriesTitle"]."</td></tr>" ;
+                echo    "<tr><td><strong>Product Type:</strong></td><td>" .$row["ProductType"]."</td></tr>" ;
+                echo    "<tr><td><br><br></td></tr>";
+            
+            }
+            echo "</table>";
 
         <!-- <table class="table"> -->
             <!-- <script src="script.js"></script> -->
