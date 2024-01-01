@@ -38,15 +38,15 @@ def displayData():
     except Exception as e: 
         return(str(e))
 
-@app.route('/search.html', methods=['GET'])
-def search():
-    try: 
-        mycursor = mydb.cursor() 
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
-        db = mycursor.fetchall() 
-        return render_template("search.html", dbhtml = db)                                   
-    except Exception as e: 
-        return(str(e))
+# @app.route('/search.html', methods=['GET'])
+# def search():
+#     try: 
+#         mycursor = mydb.cursor() 
+#         mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
+#         db = mycursor.fetchall() 
+#         return render_template("search.html", dbhtml = db)                                   
+#     except Exception as e: 
+#         return(str(e))
 
 # @app.route('/', methods=['POST'])
 
