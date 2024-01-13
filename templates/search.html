@@ -36,5 +36,60 @@
         <!-- allows users to add books to the database -->
         <button onclick="addRow()">Add Entry</button>
 
+        <script>
+
+            // declaring which columns we want to show on the search results page
+            const columnsToDisplay = ['ElectronicISBN', 'Details', 'author', 'copyright/year'];
+
+            // opening the .csv file and creating a table
+            function displayCSV() {
+                const csvFilePath = 'source/SpringerNatureBooks.csv';
+
+                fetch(csvFilePath)
+                    .then(response => response.text())
+                    .then(csvData => {
+                        Papa.parse(csvData, {
+                            header:true,
+                            dynamicTyping: true,
+                            complets: function (results) {
+                                const table = document.getElementById('csvTable'); 
+                                const headerRow = table.createTHead().insertRow(0);
+                                const headers = Object.keys(results.data[0]);
+
+
+                                for (const column of columnsToDisplay) {
+                                    const headercell = headerRow.insertCell(-1);
+                                    headerCell.textContent = column === 'Details' ? 'title' : column;
+                                }
+
+                                for (let i = 0; i < results.data.length; i++) {
+                                    const dataRow = table.insertRow(-1);
+
+                                    // adding data cells to columns
+                                    for (const column of columnsToDisplay) {
+                                        const dataCell = dataRow.insertCell(-1);
+                                        // creating link for book title for details page
+                                        if (column === 'Details') {
+                                            const titleData = results.data[i]['title'];
+                                            const detailsLink=document.createElement('a');
+                                            detailsLink.textContent = titleData;
+                                            detailsLink.href = `details.html?id=${encodeURIComponent(titleData)}`;
+                                            detailsLink.target = '_blank';
+                                            datacell.appendChild(detailsLink);
+                                        }
+
+                                        else {
+                                            // displaying the next column
+                                            dataCell.textContent = results.data[i][column];
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+            }
+
+        </script>
+
     </body>
 </html>
