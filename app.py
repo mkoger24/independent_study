@@ -48,6 +48,10 @@ def search():
     except Exception as e: 
         return(str(e))
 
+@app.route('/test.html', methods=['GET'])
+def test():
+    return render_template("test.html")
+
 # @app.route('/', methods=['POST'])
 
 if __name__ == '__main__':
