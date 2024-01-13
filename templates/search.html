@@ -83,11 +83,48 @@
                                             dataCell.textContent = results.data[i][column];
                                         }
                                     }
+                                    // inputs CRUD options 
+                                    addCrudButtons(dataRow);
                                 }
                             }
                         });
                     });
             }
+
+            function addCrudButtons(row) {
+                const updateButton = document.createElement('button');
+                updateButton.textContent = 'Update';
+                updateButton.onclick = function () {
+                    updateRow(row);
+                };
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function() {
+                    deleteRow(row);
+                };
+
+                row.insertCell(-1).appendChild(updateButton);
+                row.insertCell(-1).appendChild(deleteButton);
+            }
+
+            function addRow() {
+                const table = document.getElementById('csvTable');
+                if (column === 'Details') {
+                    // adding the title link to details page
+                    const detailsLink = document.createElement('a');
+                    detailsLink.textContent = ' New Entry';
+                    detailsLink.href = '#';
+                    detailsLink.target = '_blank';
+                    newCell.appendChild(detailsLink);
+                }
+
+                else {
+                    newCell.textContent = 'New Data';
+                }
+            }
+
+            addCrudButtons(newRow);
 
         </script>
 
