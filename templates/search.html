@@ -110,21 +110,26 @@
 
             function addRow() {
                 const table = document.getElementById('csvTable');
-                if (column === 'Details') {
-                    // adding the title link to details page
-                    const detailsLink = document.createElement('a');
-                    detailsLink.textContent = ' New Entry';
-                    detailsLink.href = '#';
-                    detailsLink.target = '_blank';
-                    newCell.appendChild(detailsLink);
-                }
+                const newRow = table.insertRow(-1);
 
-                else {
-                    newCell.textContent = 'New Data';
+                for (const column of columnsToDisplay) {
+                    if (column === 'Details') {
+                        // adding the title link to details page
+                        const detailsLink = document.createElement('a');
+                        detailsLink.textContent = ' New Entry';
+                        detailsLink.href = '#';
+                        detailsLink.target = '_blank';
+                        newCell.appendChild(detailsLink);
+                    }
+
+                    else {
+                        newCell.textContent = 'New Data';
+                    }
                 }
+                
+                addCrudButtons(newRow);
             }
-
-            addCrudButtons(newRow);
+        
 
         </script>
 
