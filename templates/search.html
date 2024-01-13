@@ -1,184 +1,40 @@
-<!DOCTYPE html5>
-
-    <html>
+<!DOCTYPE html>
+<html lang ="en">
     <head>
-        <title>Search Results</title>
-        <link rel="stylesheet" href="css/site-style.css">
-
         <meta charset="UTF-8">
-        <meta name="viewport" content=
-        "width=device-width, initial-scale=1.0">
-
-        <style>
-            * {
-            overflow: hidden;
-            }
-            body {
-            text-align: center;
-            }
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search Results</title>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs.PapaParse/5.3.0/papaparse.min.js"></script> -->
     </head>
-
-    <body translate="no" data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="">
+    <body>
+        <!-- header to nagivate to other pages -->
         <div class="header">
             <a href="home.html"><div class="header">Mae's Digital Library</div></a>
         </div>
-        <div class="topnav right">
-            <left form action="/action_page.php">
-                <label for="search"></label>
 
-                <select name="searchTerm" id="searchTerm">
-                  <option value="isbn">ISBN</option>
-                  <option value="title">Title</option>
-                  <option value="author">Author</option>
-                  <option value="seriesTitle">Series Title</option>
-                  <option value="productType"></option>
-                </select>
-            <input type="text" id="query" name="query">
-            <button type="button">Search</button>
-            </left></form>
-            <a href="login.html"><right class="active" href="login.html"><button type="button">Login</button></right></a>
-        </div>
+        <!-- select the search field desired -->
+        <label for="searchColumn">Search by Field: </label>
+        <select id="searchColumn">
+            <option value="all">Any Field</option>
+            <option value="ElectronicISBN">Electronic ISBN</option>
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="copyrightYear">Copyright Year</option>
+        </select>
 
-        <script>
-        console.log("test")
-        </script>
+        <input type="text" id="searchTerm" placeholder="Enter search term">
+        <button onclick="searchTable()">Search</button>
 
-        <table align="center">
-            <tr align="center">
-                <th>Electronic ISBN</th>
-                <th>Book Title</th>
-                <th>Author</th>
-                <th>Series Title</th>
-                <th>Product Type</th>
-            </tr>
-            echo "<table><tr><th>table headding</th></tr>";
-            while($row = $result->fetch_assoc()) {
+        <!-- if no results are found, display a no results page -->
+        <div id="noResultsMessage" style="display: none; color:red;">No results found</div>
 
-                echo    "<tr><td><strong>ISBN:</strong></td><td>" .$row["ElectronicISBN"]. "</td></tr>";
-                echo    "<tr><td><strong>BookTitle:</strong></td><td>" .$row["BookTitle"]."</td></tr>";
-                echo    "<tr><td><strong>Author:</strong></td><td>" .$row["Author"]. "</td></tr>";
-                echo    "<tr><td><strong>Series Title:</strong></td><td>" .$row["SeriesTitle"]."</td></tr>" ;
-                echo    "<tr><td><strong>Product Type:</strong></td><td>" .$row["ProductType"]."</td></tr>" ;
-                echo    "<tr><td><br><br></td></tr>";
-            
-            }
-            echo "</table>";
+        <!-- resulting table  -->
+        <table id="csvTable" border="1" style="border-spacing: 0;">
+            <!-- table content here -->
+        </table>
 
-        <!-- <table class="table"> -->
-            <!-- <script src="script.js"></script> -->
-            <!-- <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Charles Dickens, A Tale of Two Cities and the French Revolution</a></td>
-                <td>C. Jones, J. McDonagh, J. Mee</td>
-                <td>2009</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">National Identity in Global Cinema</a></td>
-                <td>C. Celli</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Crafting Jewishness in Medieval England</a></td>
-                <td>M Krummel</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Media Borders, Multimodality and Intermediality</a></td>
-                <td>L. Ellestrõm</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Imagining the Audience in Early Modern Drama, 1558-1642</a></td>
-                <td>J. Low, N, Myhill</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">An Ethnogrophy of Stress</a></td>
-                <td>V. Burbank</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Tracing Dominican Identity</a></td>
-                <td>J. Valdez</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">The Palgrave Literary Dictionary of Chaucer</a></td>
-                <td>M. Andrew</td>
-                <td>2006</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Contesting Genres in Contemporary Asian American Fiction</a></td>
-                <td>B. Huang</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Violence Against Women in Early Modern Performance</a></td>
-                <td>Kim Solga</td>
-                <td>2009</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Inner Workings of the Novel</a></td>
-                <td>A. Pasco</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Resonances of Slavery in Race/Gender Relations</a></td>
-                <td>J. Flax</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Mourning, Modernism, Postmodernism</a></td>
-                <td>T. Clewell</td>
-                <td>2009</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Royal Romances</a></td>
-                <td>K. Samuelian</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Disciplining Modernism</a></td>
-                <td>P. Caughie</td>
-                <td>2009</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">Trauma, Transcendence, and Trust</a></td>
-                <td>T. Brennan</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">The Discourses of Food in Nineteenth-Centurt British Fiction</a></td>
-                <td>A. Cozzi</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>978-0-230-53778-1</td>
-                <td><a href="bookInfo.html">J.R.R. Tolkien's Double Words and Creative Process</a></td>
-                <td>A. Zettersten</td>
-                <td>2011</td>
-            </tr>
-          </table> -->
-          <footer>
-            <a>1 2 3 4 ... 35</a> next page</footer>
-          
+        <!-- allows users to add books to the database -->
+        <button onclick="addRow()">Add Entry</button>
+
     </body>
-
 </html>
