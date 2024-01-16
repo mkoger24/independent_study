@@ -1,16 +1,12 @@
 from flask import Flask, render_template, request, send_file, redirect#, abortr
 import mysql.connector
 
-mydb = mysql.connector.connect( 
-    host = "localhost", 
-    user = "root", 
-    password = "password", 
-    database = "snbooks",
-    auth_plugin='mysql_native_password'
-    )
+app = Flask(__name__, template_folder='templates', static_folder='static',static_url_path='/static')
 
-app = Flask(__name__, template_folder='templates', static_folder='css')
 
+@app.route('/source/SpringerNatureBooks.csv')
+def serve_source(filename):
+    return send_from_directory('source', SpringerNatureBooks)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -29,24 +25,8 @@ def bookInfo():
     return render_template("bookInfo.html")
 
 @app.route('/search.html', methods=['GET'])
-def displayData():
-    try: 
-        mycursor = mydb.cursor() 
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
-        db = mycursor.fetchall() 
-        return render_template("search.html", dbhtml = db)                                   
-    except Exception as e: 
-        return(str(e))
-
-@app.route('/search.html', methods=['GET'])
 def search():
-    try: 
-        mycursor = mydb.cursor() 
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books LIMIT 10;") 
-        db = mycursor.fetchall() 
-        return render_template("search.html", dbhtml = db)                                   
-    except Exception as e: 
-        return(str(e))
+    return render_template("search.html")
 
 @app.route('/test.html', methods=['GET'])
 def test():

@@ -1,137 +1,190 @@
 <!DOCTYPE html>
 <html lang ="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Search Results</title>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs.PapaParse/5.3.0/papaparse.min.js"></script> -->
-    </head>
-    <body>
-        <!-- header to nagivate to other pages -->
-        <div class="header">
-            <a href="home.html"><div class="header">Mae's Digital Library</div></a>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="source/site-style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <!-- header to navigate to other pages -->
+    <div class="header">
+        <a href="home.html"><div class="header">Mae's Digital Library</div></a>
+    </div>
 
-        <!-- select the search field desired -->
-        <label for="searchColumn">Search by Field: </label>
-        <select id="searchColumn">
-            <option value="all">Any Field</option>
-            <option value="ElectronicISBN">Electronic ISBN</option>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="copyrightYear">Copyright Year</option>
-        </select>
+    <!-- select the search field desired -->
+    <label for="searchColumn">Search by Field: </label>
+    <select id="searchColumn">
+        <option value="all">Any Field</option>
+        <option value="ElectronicISBN">Electronic ISBN</option>
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="copyrightYear">Copyright Year</option>
+    </select>
 
-        <input type="text" id="searchTerm" placeholder="Enter search term">
-        <button onclick="searchTable()">Search</button>
+    <input type="text" id="searchTerm" placeholder="Enter search term">
+    <button onclick="searchTable()">Search</button>
 
-        <!-- if no results are found, display a no results page -->
-        <div id="noResultsMessage" style="display: none; color:red;">No results found</div>
+    <!-- if no results are found, display a no results page -->
+    <div id="noResultsMessage" style="display: none; color:red;">No results found</div>
 
-        <!-- resulting table  -->
-        <table id="csvTable" border="1" style="border-spacing: 0;">
-            <!-- table content here -->
-        </table>
+    <!-- resulting table  -->
+    <table id="csvTable" border="1" style="border-spacing: 0;">
+        <!-- table content here -->
+    </table>
 
-        <!-- allows users to add books to the database -->
-        <button onclick="addRow()">Add Entry</button>
+    <!-- allows users to add books to the database -->
+    <button onclick="addRow()">Add Entry</button>
 
-        <script>
+    <script>
+        // declaring which columns we want to show on the search results page
+        const columnsToDisplay = ['ElectronicISBN', 'Details', 'author', 'copyright/year'];
 
-            // declaring which columns we want to show on the search results page
-            const columnsToDisplay = ['ElectronicISBN', 'Details', 'author', 'copyright/year'];
+        // opening the .csv file and creating a table
+        function displayCSV() {
+            const csvFilePath = '/static/SpringerNatureBooks.csv';
 
-            // opening the .csv file and creating a table
-            function displayCSV() {
-                const csvFilePath = 'source/SpringerNatureBooks.csv';
+            fetch(csvFilePath)
+                .then(response => response.text())
+                .then(csvData => {
+                    Papa.parse(csvData, {
+                        header: true,
+                        dynamicTyping: true,
+                        complete: function (results) {
+                            console.log(results.data);
+                            const table = document.getElementById('csvTable');
+                            const headerRow = table.createTHead().insertRow(0);
 
-                fetch(csvFilePath)
-                    .then(response => response.text())
-                    .then(csvData => {
-                        Papa.parse(csvData, {
-                            header:true,
-                            dynamicTyping: true,
-                            complets: function (results) {
-                                const table = document.getElementById('csvTable'); 
-                                const headerRow = table.createTHead().insertRow(0);
-                                const headers = Object.keys(results.data[0]);
-
-
-                                for (const column of columnsToDisplay) {
-                                    const headercell = headerRow.insertCell(-1);
-                                    headerCell.textContent = column === 'Details' ? 'title' : column;
-                                }
-
-                                for (let i = 0; i < results.data.length; i++) {
-                                    const dataRow = table.insertRow(-1);
-
-                                    // adding data cells to columns
-                                    for (const column of columnsToDisplay) {
-                                        const dataCell = dataRow.insertCell(-1);
-                                        // creating link for book title for details page
-                                        if (column === 'Details') {
-                                            const titleData = results.data[i]['title'];
-                                            const detailsLink=document.createElement('a');
-                                            detailsLink.textContent = titleData;
-                                            detailsLink.href = `details.html?id=${encodeURIComponent(titleData)}`;
-                                            detailsLink.target = '_blank';
-                                            datacell.appendChild(detailsLink);
-                                        }
-
-                                        else {
-                                            // displaying the next column
-                                            dataCell.textContent = results.data[i][column];
-                                        }
-                                    }
-                                    // inputs CRUD options 
-                                    addCrudButtons(dataRow);
-                                }
+                            for (const column of columnsToDisplay) {
+                                const headerCell = headerRow.insertCell(-1);
+                                headerCell.textContent = column === 'Details' ? 'title' : column;
                             }
-                        });
+
+                            for (let i = 0; i < results.data.length; i++) {
+                                const dataRow = table.insertRow(-1);
+
+                                // adding data cells to columns
+                                for (const column of columnsToDisplay) {
+                                    const dataCell = dataRow.insertCell(-1);
+
+                                    if (column === 'Details') {
+                                        const titleData = results.data[i]['title'];
+                                        const detailsLink = document.createElement('a');
+                                        detailsLink.textContent = titleData;
+                                        detailsLink.href = `details.html?id=${encodeURIComponent(titleData)}`;
+                                        detailsLink.target = '_blank';
+                                        dataCell.appendChild(detailsLink);
+                                    } else {
+                                        dataCell.textContent = results.data[i][column];
+                                    }
+                                }
+
+                                // inputs CRUD options 
+                                addCrudButtons(dataRow);
+                            }
+                        }
                     });
+                })
+                .catch(error => {
+                    console.error('Error fetching CSV file:', error);
+                });
+        }
+
+        function addCrudButtons(row) {
+            const updateButton = document.createElement('button');
+            updateButton.textContent = 'Update';
+            updateButton.onclick = function () {
+                updateRow(row);
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                deleteRow(row);
+            };
+
+            row.insertCell(-1).appendChild(updateButton);
+            row.insertCell(-1).appendChild(deleteButton);
+        }
+
+        function addRow() {
+            const table = document.getElementById('csvTable');
+            const newRow = table.insertRow(-1);
+
+            for (const column of columnsToDisplay) {
+                const newCell = newRow.insertCell(-1);
+
+                if (column === 'Details') {
+                    // adding the title link to details page for a new entry
+                    const detailsLink = document.createElement('a');
+                    detailsLink.textContent = 'New Entry';
+                    detailsLink.href = '#';
+                    detailsLink.target = '_blank';
+                    newCell.appendChild(detailsLink);
+                } else {
+                    // displaying the next column for a new entry
+                    newCell.textContent = 'New Data';
+                }
             }
 
-            function addCrudButtons(row) {
-                const updateButton = document.createElement('button');
-                updateButton.textContent = 'Update';
-                updateButton.onclick = function () {
-                    updateRow(row);
-                };
+            // inputs CRUD options 
+            addCrudButtons(newRow);
+        }
 
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function() {
-                    deleteRow(row);
-                };
+    
+        function updateRow(row) {
+            for (let i = 0; i < row.cells.length - 3; i++) {
+                const newData = prompt(`Enter new data for ${columnsToDisplay[i]}`, row.cells[i].textContent);
+                row.cells[i].textContent = newData;
+            } 
+        }
 
-                row.insertCell(-1).appendChild(updateButton);
-                row.insertCell(-1).appendChild(deleteButton);
-            }
+        function deleteRow(row) {
+            const table = document.getElementById('csvTable');
+            const index = row.rowIndex;
+            table.deleteRow(index);
+        }
 
-            function addRow() {
-                const table = document.getElementById('csvTable');
-                const newRow = table.insertRow(-1);
+        function searchTable() {
+            const searchColumn = document.getElementById('searchColumn').value;
+            const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
+            const table = document.getElementById('csvTable');
+            const noResultsMessage = document.getElementById('noResultsMessage');
 
-                for (const column of columnsToDisplay) {
-                    if (column === 'Details') {
-                        // adding the title link to details page
-                        const detailsLink = document.createElement('a');
-                        detailsLink.textContent = ' New Entry';
-                        detailsLink.href = '#';
-                        detailsLink.target = '_blank';
-                        newCell.appendChild(detailsLink);
+            let hasResults = false;
+
+            for (let i = 1; i < table.rows.length; i++) {
+                const rowData = table.rows[i].cells;
+                let match = false;
+
+                if (searchColumn === 'all') {
+                    for (let j = 0; j < rowData.length; j++) {
+                        if (rowData[j].textContent.toLowerCase().includes(searchTerm)) {
+                            match = true;
+                            hasResults = true;
+                            break;
+                        }
                     }
-
-                    else {
-                        newCell.textContent = 'New Data';
+                } else {
+                    const columnIndex = columnsToDisplay.indexOf(searchColumn);
+                    if (rowData[columnIndex].textContent.toLowerCase().includes(searchTerm)) {
+                        match = true;
+                        hasResults = true;
                     }
                 }
-                
-                addCrudButtons(newRow);
+
+                table.rows[i].style.display = match ? '' : 'none';
             }
-        
 
-        </script>
+            table.style.display = hasResults ? 'table' : 'none';
+            noResultsMessage.style.display = hasResults ? 'none' : 'block';
+        }
 
-    </body>
+        window.onload = function() {
+            displayCSV();
+            searchTable();
+        };
+    </script>
+</body>
 </html>
