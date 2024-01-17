@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        /* Remove bullet points */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    
+        /* Style for the details */
+        h1, h2, p {
+            margin-bottom: 10px;
+        }
+    
+        /* Container for title, details, and comments */
+        #container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px; /* Add padding for spacing */
+        }
+    
+        /* Title and details block */
+        #titleDetailsContainer {
+            width: 60%;
+            box-sizing: border-box;
+            padding-right: 20px; /* Adjusted padding */
+        }
+    
+        /* Title container */
+        #titleContainer {
+            margin-bottom: 20px; /* Adjusted margin */
+        }
+    
+        /* Details container */
+        #detailsContainer {
+            /* No specific styling needed */
+        }
+    
+        /* Comments container */
+        #commentsContainer {
+            width: 40%;
+            box-sizing: border-box;
+        }
+    
+        textarea {
+            width: calc(100% - 20px); /* Adjusted width to consider margin */
+            height: 100px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+    
+        /* Additional styling to remove extra space */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the content horizontally */
+        }
+
+        
+    </style>
+    
+</head>
+<body>
+    <div id="container">
+        <div id="titleDetailsContainer">
+            <div id="titleContainer">
+                <!-- Title will be inserted here using JavaScript -->
+            </div>
+            <div id="detailsContainer">
+                <!-- Details will be inserted here using JavaScript -->
+            </div>
+        </div>
+
+        <div id="commentsContainer">
+            <div>&nbsp</div>
+            <div>&nbsp</div>
+            <div>&nbsp</div>
+            <h2>Comments</h2>
+            <textarea id="userComment" placeholder="Enter your comment..."></textarea>
+            <button onclick="saveComment()">Save Comment</button>
+            <div id="previousComments"></div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // Extract the 'id' parameter from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const titleId = urlParams.get('id');
+
+            // Update the CSV file path
+            const csvFilePath = '/static/SpringerNatureBooks.csv';
+
+            fetch(csvFilePath)
+                .then(response => response.text())
+                .then(csvData => {
+                    Papa.parse(csvData, {
+                        header: true,
+                        dynamicTyping: true,
+                        complete: function (results) {
+                            const titleContainer = document.getElementById('titleContainer');
+                            const detailsContainer = document.getElementById('detailsContainer');
+
+                            // Find the row with the specified 'BookTitle'
+                            const rowData = results.data.find(row => row.BookTitle === decodeURIComponent(titleId));
+
+                            if (rowData) {
+                                // Set the header to the value of the first column
+                                document.title = rowData.BookTitle;
+
+                                titleContainer.innerHTML = `<h1>${rowData.BookTitle}</h1>`;
+
+                                const detailsHTML = generateDetailsHTML(rowData);
+                                detailsContainer.innerHTML = detailsHTML;
+
+                                // Load and display comments
+                                loadComments();
+                            } else {
+                                detailsContainer.innerHTML = '<p>Details not found.</p>';
+                            }
+                        }
+                    });
+                });
+        };
+
+        function generateDetailsHTML(rowData) {
+            // Generate HTML for displaying details
+            let detailsHTML = '<div id="bookDetails">';
+
+            for (const key in rowData) {
+                // Exclude the 'BookTitle' column from the display
+                if (key !== 'BookTitle') {
+                    detailsHTML += `<p><strong>${key}:</strong> ${rowData[key]}</p>`;
+                }
+            }
+
+            detailsHTML += '</div>';
+            return detailsHTML;
+        }
+
+
+        function loadComments() {
+            // Load comments from local storage
+            const savedComments = JSON.parse(localStorage.getItem('userComments')) || [];
+            const previousCommentsContainer = document.getElementById('previousComments');
+
+            // Display previous comments
+            previousCommentsContainer.innerHTML = savedComments.map(comment => `<p>${comment}</p>`).join('');
+        }
+
+        function saveComment() {
+            // Save user-generated comments to local storage
+            const userComment = document.getElementById('userComment').value.trim();
+
+            if (userComment) {
+                const savedComments = JSON.parse(localStorage.getItem('userComments')) || [];
+                savedComments.push(userComment);
+
+                localStorage.setItem('userComments', JSON.stringify(savedComments));
+
+                // Clear the input field
+                document.getElementById('userComment').value = '';
+
+                // Reload and display comments
+                loadComments();
+            }
+        }
+    </script>
+
+</body>
+</html>

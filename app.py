@@ -20,9 +20,20 @@ def home():
 def login():
     return render_template("login.html")
 
-@app.route('/bookInfo.html', methods=['GET'])
-def bookInfo():
-    return render_template("bookInfo.html")
+@app.route('/details.html', methods=['GET'])
+def details():
+    # Extract 'BookTitle' from the query parameters
+    title_id = request.args.get('id')
+
+    # Fetch data based on 'BookTitle' and pass it to the template
+    # (You need to replace the placeholder logic with your database logic)
+    # Example: row_data = fetch_data_by_book_title(title_id)
+    row_data = {'BookTitle': 'Sample Book', 'Author': 'John Doe', 'CopyrightYear': 2022}
+
+    if row_data:
+        return render_template('details.html', row=row_data)
+    else:
+        return render_template('details_not_found.html')
 
 @app.route('/search.html', methods=['GET'])
 def search():
