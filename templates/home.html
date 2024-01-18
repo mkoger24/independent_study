@@ -1,197 +1,114 @@
 <!DOCTYPE html5>
-
 <html>
-    <head>
-        <title>Home</title>
-        <link rel="stylesheet" href="source/site-style.css">
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content=
-        "width=device-width, initial-scale=1.0">
-
-        <style>
-            * {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="source/site-style.css">
+    <script>
+        function searchFromHome() {
+            const searchTerm = document.getElementById('homeSearchTerm').value;
+            window.location.href = `search.html?searchColumn=all&searchTerm=${encodeURIComponent(searchTerm)}`;
+        }
+    </script>
+    <style>
+        * {
             overflow: hidden;
-            }
-            body {
+        }
+
+        body {
             text-align: center;
-            }
+        }
 
-            .header{
-                background-color: #d0d0d0;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                /* border: 1.6px solid black; */
-            }
+        .header {
+            background-color: #d0d0d0;
+            padding: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+        }
 
-            .section{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                float: center;
-            }
+        .topnav {
+            overflow: hidden;
+            background-color: #d0d0d0;
+        }
 
-            .section-left{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 60%;
-                float: left;
-            }
+        .topnav .search-bar {
+            float: left;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
 
+        .topnav .search-bar input[type=text] {
+            padding: 6px;
+            border: none;
+            font-size: 14px;
+        }
 
-            .section-right{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 46.9%;
-                float: right;
-            }
+        .topnav .search-bar button {
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            background-color: #ffffff;
+            font-size: 14px;
+        }
 
-            .float-left{
-                float: left;
-                padding: 5px;
-            }
+        .topnav .right {
+            float: right;
+            color: #000000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
 
-            .float-right{
-                float: right;
-                padding: 5px;
-            }
+        .login {
+            width: 382px;
+            overflow: hidden;
+            margin: auto;
+            margin: 20 0 0 450px;
+            padding: 80px;
+            background: #23463f;
+            border-radius: 15px;
+        }
 
-            .float-center{
-                width:230px;
-                height:500px;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                margin-top: -190px;
-                margin-left: -140px;
-                padding: 70px 0;
-                text-align: center;
-            }
-            
+        p {
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
 
-            .button {
-                border: none;
-                border-radius: 25px;
-                color: rgb(0, 0, 0);
-                background-color: #ffffff;
-                text-align: center;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-            }
+<body translate="no" data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="">
 
-            .navbar_button {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
+    <div class="header">
+        <a href="home.html">
+            <div class="header">Mae's Digital Library</div>
+        </a>
+    </div>
 
-            .login{  
-            width: 382px;  
-            overflow: hidden;  
-            margin: auto;  
-            margin: 20 0 0 450px;  
-            padding: 80px;  
-            background: #23463f;  
-            border-radius: 15px ;  
-                    
-            }
-
-            /* nav bar (from w3schools) ************************************************************************************************/
-            .topnav {
-                overflow: hidden;
-                background-color: #d0d0d0;
-            }
-            
-            .topnav left {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-
-            .topnav left:hover {
-                background-color: #d0d0d0;
-                color: black;
-            }
-            
-            .topnav left.active {
-                background-color:rgb(224, 219, 226);
-                color: rgb(0, 0, 0);
-            }
-
-            .topnav left.inactive {
-                background-color:#d0d0d0;
-                color: #e8dced;
-            }
-
-            .topnav right{
-                float: right;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-            
-
-            /* table (from w3schools) ************************************************************************************************/
-            .table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-            
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-
-            
-        </style>
-    </head>
-
-    <body translate="no" data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="">
-        <div class="header">
-            <a href="home.html"><div class="header">Mae's Digital Library</div></a>
-        </div>
-        <div class="topnav right">
-            <a href="search.html"><button class="active" href="search.html" type="button">Search</button></a>
-            <a href="login.html"><right class="active" href="login.html"><button type="button">Login</button></right></a>
+    <div class="topnav">
+        <div class="search-bar">
+            <!-- todo: fix this to appropriately search + add dropdown search -->
+            <input type="text" id="homeSearchTerm" placeholder="Search...">
+            <button onclick="searchFromHome()">Search</button>
         </div>
 
-        <p align="left" style="padding:15px">
-            Mae's Digital Library, created in 2023-2024, is a digital library which focuses on the use of collaboration in an academic setting. This site allows users to search for and collaborate on literature and have academic discussions about them.  
-        </p>
-    </body>
+        <div class="right">
+            <!-- <a href="search.html">
+                <button class="active" type="button">Search</button>
+            </a> -->
+            <a href="login.html">
+                <right class="active" href="login.html"><button type="button">Login</button></right>
+            </a>
+        </div>
+    </div>
+
+    <p>
+        Mae's Digital Library, created in 2023-2024, is a digital library that focuses on the use of collaboration in an academic setting. This site allows users to search for and collaborate on literature and have academic discussions about them.
+    </p>
+
+</body>
 
 </html>

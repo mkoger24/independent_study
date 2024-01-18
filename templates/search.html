@@ -3,174 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Table with CRUD, Details, and Search</title>
+    <title>Search</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
-                    * {
+        * {
             overflow: hidden;
-            }
-            body {
+        }
+
+        body {
             text-align: center;
-            }
+        }
 
-            .header{
-                background-color: #d0d0d0;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                /* border: 1.6px solid black; */
-            }
+        .header {
+            background-color: #d0d0d0;
+            padding: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+        }
 
-            .section{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                float: center;
-            }
+        .section {
+            background-color: #ece5e5;
+            padding: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border: #000000;
+            border-radius: 2px;
+            border-style: solid;
+            float: center;
+        }
 
-            .section-left{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 60%;
-                float: left;
-            }
+        .section-left {
+            background-color: #ece5e5;
+            padding: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border: #000000;
+            border-radius: 2px;
+            border-style: solid;
+            width: 60%;
+            float: left;
+        }
 
+        .section-right {
+            background-color: #ece5e5;
+            padding: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border: #000000;
+            border-radius: 2px;
+            border-style: solid;
+            width: 46.9%;
+            float: right;
+        }
 
-            .section-right{
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color:rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 46.9%;
-                float: right;
-            }
+        .float-left {
+            float: left;
+            padding: 5px;
+        }
 
-            .float-left{
-                float: left;
-                padding: 5px;
-            }
+        .float-right {
+            float: right;
+            padding: 5px;
+        }
 
-            .float-right{
-                float: right;
-                padding: 5px;
-            }
+        .float-center {
+            width: 230px;
+            height: 500px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -190px;
+            margin-left: -140px;
+            padding: 70px 0;
+            text-align: center;
+        }
 
-            .float-center{
-                width:230px;
-                height:500px;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                margin-top: -190px;
-                margin-left: -140px;
-                padding: 70px 0;
-                text-align: center;
-            }
-            
+        .button {
+            border: none;
+            border-radius: 25px;
+            color: rgb(0, 0, 0);
+            background-color: #ffffff;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
 
-            .button {
-                border: none;
-                border-radius: 25px;
-                color: rgb(0, 0, 0);
-                background-color: #ffffff;
-                text-align: center;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-            }
+        .navbar_button {
+            float: left;
+            color: #000000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
 
-            .navbar_button {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
+        .login {
+            width: 382px;
+            overflow: hidden;
+            margin: auto;
+            margin: 20 0 0 450px;
+            padding: 80px;
+            background: #23463f;
+            border-radius: 15px;
+        }
 
-            .login{  
-            width: 382px;  
-            overflow: hidden;  
-            margin: auto;  
-            margin: 20 0 0 450px;  
-            padding: 80px;  
-            background: #23463f;  
-            border-radius: 15px ;  
-                    
-            }
+        /* nav bar (from w3schools) ************************************************************************************************/
+        .topnav {
+            overflow: hidden;
+            background-color: #d0d0d0;
+        }
 
-            /* nav bar (from w3schools) ************************************************************************************************/
-            .topnav {
-                overflow: hidden;
-                background-color: #d0d0d0;
-            }
-            
-            .topnav left {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
+        .topnav left {
+            float: left;
+            color: #000000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
 
-            .topnav left:hover {
-                background-color: #d0d0d0;
-                color: black;
-            }
-            
-            .topnav left.active {
-                background-color:rgb(224, 219, 226);
-                color: rgb(0, 0, 0);
-            }
+        .topnav left:hover {
+            background-color: #d0d0d0;
+            color: black;
+        }
 
-            .topnav left.inactive {
-                background-color:#d0d0d0;
-                color: #e8dced;
-            }
+        .topnav left.active {
+            background-color: rgb(224, 219, 226);
+            color: rgb(0, 0, 0);
+        }
 
-            .topnav right{
-                float: right;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-            
+        .topnav left.inactive {
+            background-color: #d0d0d0;
+            color: #e8dced;
+        }
 
-            /* table (from w3schools) ************************************************************************************************/
-            .table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-            
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
+        .topnav right {
+            float: right;
+            color: #000000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        /* table (from w3schools) ************************************************************************************************/
+        .table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
     </style>
 </head>
 <body>
@@ -193,15 +189,15 @@
     <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
 
     <table id="csvTable" border="1" style="border-spacing: 0;">
-        <!-- Table content will be inserted here -->
+        <!-- table goes here -->
+        <!-- todo: paging, move add book button to top for easy finding -->
     </table>
 
     <button onclick="addRow()">Add Row</button>
 
     <script>
-        // Define columns to display in the main table
+        // columns for use in the main search page
         const columnsToDisplay = ['ElectronicISBN', 'Details', 'Author', 'CopyrightYear'];
-;
 
         function displayCSV() {
             const csvFilePath = '/static/SpringerNatureBooks.csv';
@@ -215,50 +211,40 @@
                         complete: function (results) {
                             const table = document.getElementById('csvTable');
 
-                            // Clear existing table content
                             table.innerHTML = '';
 
-                            // Create the header row
                             const headerRow = table.createTHead().insertRow(0);
 
-                            // Add headers to the header row for columns to display
                             for (const column of columnsToDisplay) {
                                 const headerCell = headerRow.insertCell(-1);
                                 headerCell.textContent = column === 'Details' ? 'BookTitle' : column;
                             }
 
-                            // Loop through the results to populate the table
                             for (let i = 0; i < results.data.length; i++) {
                                 const dataRow = table.insertRow(-1);
 
-                                // Add data cells for columns to display
                                 for (const column of columnsToDisplay) {
                                     const dataCell = dataRow.insertCell(-1);
 
                                     if (column === 'Details') {
-                                        // Add the "Details" link for the 'BookTitle' column
+                                        // links to the book info page
                                         const titleData = results.data[i]['BookTitle'];
                                         const detailsLink = document.createElement('a');
                                         detailsLink.textContent = titleData;
                                         detailsLink.href = `details.html?id=${encodeURIComponent(titleData)}`;
-                                        detailsLink.target = '_blank'; // Open link in a new tab/window
+                                        detailsLink.target = '_blank'; // opens link in new tab
+                                        // todo: add breadcrumbs or open in same tab
                                         dataCell.appendChild(detailsLink);
                                     } else {
-                                        // Display other columns
                                         dataCell.textContent = results.data[i][column];
                                     }
                                 }
-
-                                // Add CRUD buttons
                                 addCrudButtons(dataRow);
                             }
                         }
                     });
                 });
         }
-
-
-
 
         function addCrudButtons(row) {
             const updateButton = document.createElement('button');
@@ -281,29 +267,22 @@
             const table = document.getElementById('csvTable');
             const newRow = table.insertRow(-1);
 
-            // Add data cells for columns to display
             for (const column of columnsToDisplay) {
                 const newCell = newRow.insertCell(-1);
                 if (column === 'Details') {
-                    // Add the "Details" link for the 'title' column
                     const detailsLink = document.createElement('a');
                     detailsLink.textContent = 'New Entry';
-                    detailsLink.href = '#'; // Placeholder href
-                    detailsLink.target = '_blank'; // Open link in a new tab/window
+                    detailsLink.href = '#';
+                    detailsLink.target = '_blank';
                     newCell.appendChild(detailsLink);
                 } else {
-                    // Display other columns with default values
-                    newCell.textContent = 'New Data';  // You can customize the default data
+                    newCell.textContent = 'New Data';
                 }
             }
-
-            // Add CRUD buttons
             addCrudButtons(newRow);
         }
 
         function updateRow(row) {
-            // Implement the logic to update the row data
-            // You can use prompt, input fields, or any other method for user input
             for (let i = 0; i < row.cells.length - 3; i++) {
                 const newData = prompt(`Enter new data for ${columnsToDisplay[i]}`, row.cells[i].textContent);
                 row.cells[i].textContent = newData;
@@ -328,7 +307,6 @@
                 const rowData = table.rows[i].cells;
                 let match = false;
 
-                // Check if the search term matches the data in the selected column
                 if (searchColumn === 'all') {
                     for (let j = 0; j < rowData.length - 3; j++) {
                         if (rowData[j].textContent.toLowerCase().includes(searchTerm)) {
@@ -344,12 +322,8 @@
                         hasResults = true;
                     }
                 }
-
-                // Toggle row visibility based on the match
                 table.rows[i].style.display = match ? '' : 'none';
             }
-
-            // Toggle the visibility of the table and "No results found" message
             table.style.display = hasResults ? 'table' : 'none';
             noResultsMessage.style.display = hasResults ? 'none' : 'block';
         }
@@ -357,15 +331,15 @@
         document.getElementById('searchTerm').addEventListener('input', function () {
             searchTable();
         });
-        
+
         window.onload = function () {
             displayCSV();
-            searchTable(); // Initial search to show all rows
+            //searchTable();
         };
 
         document.addEventListener('DOMContentLoaded', function () {
             displayCSV();
-            searchTable(); // Initial search to show all rows
+            //searchTable();
         });
     </script>
 

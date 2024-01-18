@@ -22,12 +22,7 @@ def login():
 
 @app.route('/details.html', methods=['GET'])
 def details():
-    # Extract 'BookTitle' from the query parameters
     title_id = request.args.get('id')
-
-    # Fetch data based on 'BookTitle' and pass it to the template
-    # (You need to replace the placeholder logic with your database logic)
-    # Example: row_data = fetch_data_by_book_title(title_id)
     row_data = {'BookTitle': 'Sample Book', 'Author': 'John Doe', 'CopyrightYear': 2022}
 
     if row_data:
