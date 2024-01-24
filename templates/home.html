@@ -1,5 +1,6 @@
 <!DOCTYPE html5>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,23 @@
     <link rel="stylesheet" href="source/site-style.css">
     <script>
         function searchFromHome() {
-            const searchTerm = document.getElementById('homeSearchTerm').value;
-            window.location.href = `search.html?searchColumn=all&searchTerm=${encodeURIComponent(searchTerm)}`;
-        }
+        const searchColumn = document.getElementById('homeSearchColumn').value;
+        const searchTerm = document.getElementById('homeSearchTerm').value;
+
+        const searchUrl = `search.html?searchColumn=${encodeURIComponent(searchColumn)}&searchTerm=${encodeURIComponent(searchTerm)}`;
+
+        window.location.href = searchUrl;
+    }
     </script>
     <style>
         * {
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
         body {
             text-align: center;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .header {
@@ -33,44 +40,13 @@
             background-color: #d0d0d0;
         }
 
-        .topnav .search-bar {
-            float: left;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .topnav .search-bar input[type=text] {
-            padding: 6px;
-            border: none;
-            font-size: 14px;
-        }
-
-        .topnav .search-bar button {
-            border: none;
-            padding: 6px;
-            cursor: pointer;
-            background-color: #ffffff;
-            font-size: 14px;
-        }
-
-        .topnav .right {
+        .right {
             float: right;
             color: #000000;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
             font-size: 17px;
-        }
-
-        .login {
-            width: 382px;
-            overflow: hidden;
-            margin: auto;
-            margin: 20 0 0 450px;
-            padding: 80px;
-            background: #23463f;
-            border-radius: 15px;
         }
 
         p {
@@ -90,15 +66,21 @@
 
     <div class="topnav">
         <div class="search-bar">
-            <!-- todo: fix this to appropriately search + add dropdown search -->
+            <select id="homeSearchColumn">
+                <option value="all">All Columns</option>
+                <option value="ElectronicISBN">Electronic ISBN</option>
+                <option value="BookTitle">Title</option>
+                <option value="Author">Author</option>
+                <option value="CopyrightYear">Copyright Year</option>
+            </select>
             <input type="text" id="homeSearchTerm" placeholder="Search...">
             <button onclick="searchFromHome()">Search</button>
         </div>
 
         <div class="right">
-            <!-- <a href="search.html">
+            <a href="search.html">
                 <button class="active" type="button">Search</button>
-            </a> -->
+            </a>
             <a href="login.html">
                 <right class="active" href="login.html"><button type="button">Login</button></right>
             </a>
