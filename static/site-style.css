@@ -1,10 +1,9 @@
-.header{
-    background-color: #d0d0d0;
-    padding: 20px;
-    font-size: 10px;
-    text-align: center;
-    color:rgb(0, 0, 0);
-    /* border: 1.6px solid black; */
+.header {
+  background-color: #d0d0d0;
+  padding: 20px;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(0, 0, 0);
 }
 
 .section{
@@ -145,6 +144,7 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    overflow-y:scroll;
   }
   
   td, th {
@@ -156,5 +156,6 @@
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+
 
   
