@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, redirect#, abortr
+from flask import Flask, render_template, request, send_file, redirect, request#, abortr
 import mysql.connector
 
 mydb = mysql.connector.connect( 
@@ -51,25 +51,35 @@ def bookInfo():
 #     except Exception as e: 
 #         return(str(e))
 
-@app.route('/search.html', methods=['GET'])
-def search():
-    try: 
-        mycursor = mydb.cursor() 
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books;") 
-        dbhtml = mycursor.fetchall() 
-        return render_template("search.html", dbhtml = dbhtml)                                   
-    except Exception as e: 
-        return(str(e))
+# @app.route('/search.html', methods=['GET'])
+# def search():
+#     # return "word"
+#     try: 
+#         mycursor = mydb.cursor() 
+#         mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books;") 
+#         dbhtml = mycursor.fetchall() 
+#         return render_template("search.html", dbhtml = dbhtml)                                   
+#     except Exception as e: 
+#         return(str(e))
 
-@app.route('/search.html?q=<column>+<searchTerm>', methods=['GET'])
+@app.route('/search.html?q=<column>&<searchTerm>', methods=['GET'])
 def searchTerm(column,searchTerm):
+    return "other"
     try: 
+        if request.args.get("q")>'':
+        # if not column and not searchTerm:
+            mycursor = mydb.cursor() 
+            mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books;") 
+            dbhtml = mycursor.fetchall() 
+            return render_template("search.html", dbhtml = dbhtml)    
     #     column = column
     #     searchTerm = searchTerm
         # if column == "all":
         #     column = "ElectronicISBN like" +searchTerm "or BookTitle like" +searchTerm "or Author"
         mycursor = mydb.cursor() 
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books WHERE %s like %s;", (column,searchTerm)) 
+        query ="SELECT ElectronicISBN, BookTitle, Author FROM books WHERE %s% like %s;"
+        # return query
+        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books WHERE %s% like %s;", (column,searchTerm)) 
         dbhtml = mycursor.fetchall() 
         # print(repr(dbhtml))
         return render_template("search.html", dbhtml = dbhtml)                                   

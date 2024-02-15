@@ -238,9 +238,11 @@
             }
 
             function redirect() {
+                // alert();
                 const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
                 const searchColumn = document.getElementById('searchColumn').value;
-                window.location.href="search.html?q="+searchColumn+'+'+searchTerm;
+                // alert("search.html?q="+searchColumn+'&'+searchTerm);
+                window.location.href="search.html?q="+searchColumn+'&'+searchTerm;
             }
         </script>
 
