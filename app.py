@@ -24,44 +24,6 @@ def home():
 def login():
     return render_template("login.html")
 
-@app.route('/bookInfo.html', methods=['GET'])
-def bookInfo():
-    return render_template("bookInfo.html")
-
-# @app.route('/search.html', methods=['GET'])
-# def searchPage():
-#     cur = con.cursor()
-#     cur.execute("SELECT * FROM bookLib.books")
-#     data = cur.fetchall()
-#     return render_template('search.html', data=data)
-
-# @app.route('/search.html', methods=['GET'])
-# def displayData():
-#     try: 
-#         mycursor = mydb.cursor() 
-#         mycursor.execute("SELECT * FROM bookLib.books;") 
-#         dbhtml = mycursor.fetchone() 
-#         # print(dbhtml[1])
-#         # print(repr(dbhtml))
-#         # return "char"
-#         # app.logger.warning(dbhtml)
-#         # app.logger.error(dbhtml)
-#         # app.logger.info(dbhtml)
-#         return render_template("search.html", dbhtml =dbhtml)                                   
-#     except Exception as e: 
-#         return(str(e))
-
-# @app.route('/search.html', methods=['GET'])
-# def search():
-#     # return "word"
-#     try: 
-#         mycursor = mydb.cursor() 
-#         mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books;") 
-#         dbhtml = mycursor.fetchall() 
-#         return render_template("search.html", dbhtml = dbhtml)                                   
-#     except Exception as e: 
-#         return(str(e))
-
 @app.route('/search.html', methods=['GET'])
 def searchTerm():
     # get all arguments from url
@@ -111,7 +73,7 @@ def searchTerm():
         dbhtml = mycursor.fetchall() 
         return render_template("search.html", dbhtml = dbhtml)
 
-        
+
     except Exception as e: 
         return(str(e))
 
