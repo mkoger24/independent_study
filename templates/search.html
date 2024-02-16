@@ -3,7 +3,7 @@
     <html>
     <head>
         <title>Search Results</title>
-        <link rel="stylesheet" href="css/site-style.css">
+        <link rel="stylesheet" href="static/site-style.css">
 
         <meta charset="UTF-8">
         <meta name="viewport" content=
@@ -242,7 +242,7 @@
                 const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
                 const searchColumn = document.getElementById('searchColumn').value;
                 // alert("search.html?q="+searchColumn+'&'+searchTerm);
-                window.location.href="search.html?q="+searchColumn+'&'+searchTerm;
+                window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
             }
         </script>
 

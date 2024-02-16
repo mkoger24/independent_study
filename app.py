@@ -9,7 +9,7 @@ mydb = mysql.connector.connect(
     auth_plugin='mysql_native_password'
     )
 
-app = Flask(__name__, template_folder='templates', static_folder='css')
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 
 @app.route('/', methods=['GET'])
@@ -62,27 +62,53 @@ def bookInfo():
 #     except Exception as e: 
 #         return(str(e))
 
-@app.route('/search.html?q=<column>&<searchTerm>', methods=['GET'])
-def searchTerm(column,searchTerm):
-    return "other"
+@app.route('/search.html', methods=['GET'])
+def searchTerm():
+    arguments = request.args.get("q")
+    # searchTerm = request.args.get("&search")
+
+    # return "other"
     try: 
-        if request.args.get("q")>'':
-        # if not column and not searchTerm:
+        if arguments:
+            search = arguments.split('.')
+            print(search)
+            column = search[0]
+            searchTerm = search[1]
+            print(column)
+            print(searchTerm)
+        
+        # if there are no specified search parameters
+        else:
+            query = "SELECT ElectronicISBN, BookTitle, Author FROM books;"
             mycursor = mydb.cursor() 
-            mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books;") 
+            mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
-            return render_template("search.html", dbhtml = dbhtml)    
-    #     column = column
-    #     searchTerm = searchTerm
-        # if column == "all":
-        #     column = "ElectronicISBN like" +searchTerm "or BookTitle like" +searchTerm "or Author"
+            return render_template("search.html", dbhtml = dbhtml)
+        # column = request.args.get("column")
+        # searchTerm = request.args.get("searchTerm")
+        # print(column)
+        # print(searchTerm)
+
+
+        if searchTerm == None:
+            return "must enter a search term"
+
+        elif column == 'BookTitle':
+            query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like '%" + searchTerm + "%';"
+
+        elif column == 'ElectronicISBN':
+            query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
+
+        elif column == 'Author':
+            query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
+
+        elif column == 'All':
+            query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
+
         mycursor = mydb.cursor() 
-        query ="SELECT ElectronicISBN, BookTitle, Author FROM books WHERE %s% like %s;"
-        # return query
-        mycursor.execute("SELECT ElectronicISBN, BookTitle, Author FROM books WHERE %s% like %s;", (column,searchTerm)) 
+        mycursor.execute(query) 
         dbhtml = mycursor.fetchall() 
-        # print(repr(dbhtml))
-        return render_template("search.html", dbhtml = dbhtml)                                   
+        return render_template("search.html", dbhtml = dbhtml)
     except Exception as e: 
         return(str(e))
 
