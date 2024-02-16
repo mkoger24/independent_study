@@ -64,11 +64,11 @@ def bookInfo():
 
 @app.route('/search.html', methods=['GET'])
 def searchTerm():
+    # get all arguments from url
     arguments = request.args.get("q")
-    # searchTerm = request.args.get("&search")
 
-    # return "other"
     try: 
+        # if there are arguments, store them in column and searchTerm
         if arguments:
             search = arguments.split('.')
             print(search)
@@ -77,22 +77,20 @@ def searchTerm():
             print(column)
             print(searchTerm)
         
-        # if there are no specified search parameters
+        # if there are no specified search parameters, display all entries
         else:
             query = "SELECT ElectronicISBN, BookTitle, Author FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
             return render_template("search.html", dbhtml = dbhtml)
-        # column = request.args.get("column")
-        # searchTerm = request.args.get("searchTerm")
-        # print(column)
-        # print(searchTerm)
 
-
+        # TODO add popup here, or just display all entries?
+        # TODO logical operation needs changed
         if searchTerm == None:
             return "must enter a search term"
 
+        # specifying a query to use based on the intended column to search
         elif column == 'BookTitle':
             query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like '%" + searchTerm + "%';"
 
@@ -102,13 +100,18 @@ def searchTerm():
         elif column == 'Author':
             query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
 
+        # if all columns is specified
+        # TODO test this functionality
         elif column == 'All':
             query = "SELECT ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
 
+        # run the query and return the template
         mycursor = mydb.cursor() 
         mycursor.execute(query) 
         dbhtml = mycursor.fetchall() 
         return render_template("search.html", dbhtml = dbhtml)
+
+        
     except Exception as e: 
         return(str(e))
 
