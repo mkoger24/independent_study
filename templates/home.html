@@ -6,54 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="static/site-style.css">
-    <!-- <script>
-        function searchFromHome() {
-        const searchColumn = document.getElementById('homeSearchColumn').value;
-        const searchTerm = document.getElementById('homeSearchTerm').value;
-
-        const searchUrl = `search.html?searchColumn=${encodeURIComponent(searchColumn)}&searchTerm=${encodeURIComponent(searchTerm)}`;
-
-        window.location.href = searchUrl;
-    }
-    </script> -->
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            text-align: center;
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .header {
-            background-color: #d0d0d0;
-            padding: 20px;
-            font-size: 10px;
-            text-align: center;
-            color: rgb(0, 0, 0);
-        }
-
-        .topnav {
-            overflow: hidden;
-            background-color: #d0d0d0;
-        }
-
-        .right {
-            float: right;
-            color: #000000;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        p {
-            padding: 15px;
-            text-align: left;
-        }
-    </style>
 </head>
 
 <body>
@@ -65,18 +17,23 @@
     </div>
 
     <div class="topnav">
-        <!-- <div class="search-bar">
-            <select id="homeSearchColumn">
+
+        <div class="header">
+    
+            <label for="searchColumn">Search by Column:</label>
+            <select id="searchColumn">
                 <option value="all">All Columns</option>
                 <option value="ElectronicISBN">Electronic ISBN</option>
                 <option value="BookTitle">Title</option>
                 <option value="Author">Author</option>
                 <option value="CopyrightYear">Copyright Year</option>
             </select>
-            <input type="text" id="homeSearchTerm" placeholder="Search...">
-            <button onclick="searchFromHome()">Search</button>
-        </div> -->
+            <input type="text" id="searchTerm" placeholder="Enter search term" oninput="searchTable()">
+            <!-- <button onclick="searchTable()">Search</button> -->
+            <button onclick="redirect()">Search</button>
 
+            <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
+        </div>
         <div class="right">
             <a href="search.html">
                 <button class="active" type="button">Search</button>
@@ -90,6 +47,17 @@
     <p>
         Mae's Digital Library, created in 2023-2024, is a digital library that focuses on the use of collaboration in an academic setting. This site allows users to search for and collaborate on literature and have academic discussions about them.
     </p>
+
+    <script>
+        // reloads the page, allowing for the use of url parameters for searching
+        function redirect() {
+            // alert();
+            const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
+            const searchColumn = document.getElementById('searchColumn').value;
+            // alert("search.html?q="+searchColumn+'&'+searchTerm);
+            window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
+        }
+    </script>
 
 </body>
 

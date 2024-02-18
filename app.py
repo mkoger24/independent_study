@@ -26,10 +26,11 @@ def login():
 
 @app.route('/search.html', methods=['GET'])
 def searchTerm():
-    # get all arguments from url
-    arguments = request.args.get("q")
 
     try: 
+        # get all arguments from url
+        arguments = request.args.get("q")
+
         # if there are arguments, store them in column and searchTerm
         if arguments:
             search = arguments.split('.')
@@ -74,6 +75,20 @@ def searchTerm():
         return render_template("search.html", dbhtml = dbhtml)
 
 
+    except Exception as e: 
+        return(str(e))
+
+@app.route('/details.html', methods=['GET'])
+def display():
+
+    try:
+        isbn = request.args.get("q")
+        query = "SELECT * FROM books WHERE ElectronicISBN = '" + isbn + "';"
+        mycursor = mydb.cursor() 
+        mycursor.execute(query) 
+        dbhtml = mycursor.fetchall() 
+        return render_template("details.html", dbhtml = dbhtml)
+    
     except Exception as e: 
         return(str(e))
 

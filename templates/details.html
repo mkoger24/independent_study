@@ -4,155 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details Page</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <style>
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-    
-        h1, h2, p {
-            margin-bottom: 10px;
-        }
-    
-        #container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px; 
-        }
-    
-        #titleDetailsContainer {
-            width: 60%;
-            box-sizing: border-box;
-            padding-right: 20px;
-        }
-
-        #titleContainer {
-            margin-bottom: 20px;
-        }
-    
-        #commentsContainer {
-            width: 40%;
-            box-sizing: border-box;
-        }
-    
-        textarea {
-            width: calc(100% - 20px);
-            height: 100px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-    
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-    
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        
-    </style>
+    <link rel="stylesheet" href="static/site-style.css">
     
 </head>
 <body>
-    <div id="container">
-        <div id="titleDetailsContainer">
-            <div id="titleContainer">
-                <!-- book title goes here -->
-            </div>
-            <div id="detailsContainer">
-                <!-- book details here -->
-            </div>
-        </div>
+    <div class="header">
+        <a href="home.html">
+            <div class="header">Mae's Digital Library</div>
+        </a>
 
-        <div id="commentsContainer">
-            <div>&nbsp</div>
-            <div>&nbsp</div>
-            <div>&nbsp</div>
-            <h2>Comments</h2>
+        <label for="searchColumn">Search by Column:</label>
+        <select id="searchColumn">
+            <option value="all">All Columns</option>
+            <option value="ElectronicISBN">Electronic ISBN</option>
+            <option value="BookTitle">Title</option>
+            <option value="Author">Author</option>
+            <option value="CopyrightYear">Copyright Year</option>
+        </select>
+        <input type="text" id="searchTerm" placeholder="Enter search term" oninput="searchTable()">
+        <!-- <button onclick="searchTable()">Search</button> -->
+        <button onclick="redirect()">Search</button>
 
-            <!-- todo: change phrasing here -->
-            <textarea id="userComment" placeholder="Enter your comment..."></textarea>
-            <button onclick="saveComment()">Save Comment</button>
-            <div id="previousComments"></div>
-        </div>
+        <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
+
+    </div>
+
+    <div>
+        {% for row in dbhtml %}
+
+        <h>{{row.0}}</h>
+        <p>{{row.1}}</p>
+        <p>{{row.2}}</p>
+        <p>{{row.3}}</p>
+        <p>{{row.4}}</p>
+        <p>{{row.5}}</p>
+        <p>{{row.6}}</p>
+        <p>{{row.7}}</p>
+        <p>{{row.8}}</p>
+        <p>{{row.9}}</p>
+        <p>{{row.10}}</p>
+        {% endfor %}
     </div>
 
     <script>
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const titleId = urlParams.get('id');
-
-            const csvFilePath = '/static/SpringerNatureBooks.csv';
-
-            fetch(csvFilePath)
-                .then(response => response.text())
-                .then(csvData => {
-                    Papa.parse(csvData, {
-                        header: true,
-                        dynamicTyping: true,
-                        complete: function (results) {
-                            const titleContainer = document.getElementById('titleContainer');
-                            const detailsContainer = document.getElementById('detailsContainer');
-
-                            const rowData = results.data.find(row => row.BookTitle === decodeURIComponent(titleId));
-
-                            if (rowData) {
-                                document.title = rowData.BookTitle;
-
-                                titleContainer.innerHTML = `<h1>${rowData.BookTitle}</h1>`;
-
-                                const detailsHTML = generateDetailsHTML(rowData);
-                                detailsContainer.innerHTML = detailsHTML;
-
-                                loadComments();
-                            } else {
-                                detailsContainer.innerHTML = '<p>Details not found.</p>';
-                            }
-                        }
-                    });
-                });
-        };
-
-        function generateDetailsHTML(rowData) {
-            let detailsHTML = '<div id="bookDetails">';
-
-            for (const key in rowData) {
-                if (key !== 'BookTitle') {
-                    detailsHTML += `<p><strong>${key}:</strong> ${rowData[key]}</p>`;
-                }
-            }
-
-            detailsHTML += '</div>';
-            return detailsHTML;
-        }
-
-
-        function loadComments() {
-            const savedComments = JSON.parse(localStorage.getItem('userComments')) || [];
-            const previousCommentsContainer = document.getElementById('previousComments');
-
-            previousCommentsContainer.innerHTML = savedComments.map(comment => `<p>${comment}</p>`).join('');
-        }
-
-        function saveComment() {
-            const userComment = document.getElementById('userComment').value.trim();
-
-            if (userComment) {
-                const savedComments = JSON.parse(localStorage.getItem('userComments')) || [];
-                savedComments.push(userComment);
-
-                localStorage.setItem('userComments', JSON.stringify(savedComments));
-
-                document.getElementById('userComment').value = '';
-
-                loadComments();
-            }
+        // reloads the page, allowing for the use of url parameters for searching
+        function redirect() {
+            // alert();
+            const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
+            const searchColumn = document.getElementById('searchColumn').value;
+            // alert("search.html?q="+searchColumn+'&'+searchTerm);
+            window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
         }
     </script>
 

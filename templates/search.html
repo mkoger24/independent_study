@@ -8,171 +8,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content=
         "width=device-width, initial-scale=1.0">
-
-        <style>
-            * {
-                overflow: hidden;
-            }
-
-            body {
-                text-align: center;
-            }
-
-            .header {
-                background-color: #d0d0d0;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color: rgb(0, 0, 0);
-            }
-
-            .section {
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color: rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                float: center;
-            }
-
-            .section-left {
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color: rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 60%;
-                float: left;
-            }
-
-            .section-right {
-                background-color: #ece5e5;
-                padding: 20px;
-                font-size: 10px;
-                text-align: center;
-                color: rgb(0, 0, 0);
-                border: #000000;
-                border-radius: 2px;
-                border-style: solid;
-                width: 46.9%;
-                float: right;
-            }
-
-            .float-left {
-                float: left;
-                padding: 5px;
-            }
-
-            .float-right {
-                float: right;
-                padding: 5px;
-            }
-
-            .float-center {
-                width: 230px;
-                height: 500px;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                margin-top: -190px;
-                margin-left: -140px;
-                padding: 70px 0;
-                text-align: center;
-            }
-
-            .button {
-                border: none;
-                border-radius: 25px;
-                color: rgb(0, 0, 0);
-                background-color: #ffffff;
-                text-align: center;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-            }
-
-            .navbar_button {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-
-            .login {
-                width: 382px;
-                overflow: hidden;
-                margin: auto;
-                margin: 20 0 0 450px;
-                padding: 80px;
-                background: #23463f;
-                border-radius: 15px;
-            }
-
-            /* nav bar (from w3schools) ************************************************************************************************/
-            .topnav {
-                overflow: hidden;
-                background-color: #d0d0d0;
-            }
-
-            .topnav left {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-
-            .topnav left:hover {
-                background-color: #d0d0d0;
-                color: black;
-            }
-
-            .topnav left.active {
-                background-color: rgb(224, 219, 226);
-                color: rgb(0, 0, 0);
-            }
-
-            .topnav left.inactive {
-                background-color: #d0d0d0;
-                color: #e8dced;
-            }
-
-            .topnav right {
-                float: right;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-
-            /* table (from w3schools) ************************************************************************************************/
-            .table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-                overflow-y:scroll;
-            }
-
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-        </style>
     </head>
 
     <body translate="no" data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="">
@@ -194,17 +29,6 @@
             <button onclick="redirect()">Search</button>
 
             <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
-
-            <!-- <form action="search.php" method="post">
-                Search <input type="text" name="search"><br>
-                
-                Column: <select name="column">
-                    <option value="ElectronicISBN">ISBN</option>
-                    <option value="BookTitle">Title</option>
-                    <option value="Author">Author</option>
-                    </select><br>
-                <input type ="submit">
-                </form> -->
         </div>
 
         <div style="border:1px solid black;height:620px;width:100%;overflow-y:hidden;overflow-y: scroll;">
@@ -216,8 +40,8 @@
                 </tr>
                 {% for row in dbhtml %}
                 <tr>
-                    <td>{{row.0}}</td>
-                    <td>{{row.1}}</td>
+                    <td id="isbn">{{row.0}}</td>
+                    <td onclick='details()'>{{row.1}}</td>
                     <td>{{row.2}}</td>
                 </tr>
                 {% endfor %}
@@ -225,29 +49,19 @@
         </div>
 
         <script>
-
-            function searchTable() {
-                const searchColumn = document.getElementById('searchColumn').value;
-                const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
-                const table = document.getElementById('table');
-                const noResultsMessage = document.getElementById('noResultsMessage');
-
-                let hasResults = false;
-
-
-            }
-
+            // reloads the page, allowing for the use of url parameters for searching
             function redirect() {
-                // alert();
                 const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
                 const searchColumn = document.getElementById('searchColumn').value;
-                // alert("search.html?q="+searchColumn+'&'+searchTerm);
                 window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
             }
-        </script>
 
-          <!-- <footer>
-            <a>1 2 3 4 ... 35</a> next page</footer> -->
+            function details() {
+                const electronicISBN = document.getElementById('isbn').value;
+                alert(electronicISBN);
+                // window.location.href="details.html?q="+electronicISBN;
+            }
+        </script>
 
 
           
