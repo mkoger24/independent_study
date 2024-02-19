@@ -30,9 +30,10 @@
     </div>
 
     <div style="float: left;">
+
         {% for row in bookdb %}
 
-        <h>{{row.0}}</h>
+        <b>{{row.0}}</b>
         <p>{{row.1}}</p>
         <p>{{row.2}}</p>
         <p>{{row.3}}</p>
@@ -47,6 +48,11 @@
     </div>
 
     <div style="float: right;">
+
+        <textarea id="userComment" placeholder="Enter a comment"></textarea>
+        <br>
+        <button onclick="saveComment()">Save Comment</button>
+
         {% for row in commentdb %}
         
         <b>{{row.3}}{{row.2}}</b>
@@ -64,6 +70,47 @@
             // alert("search.html?q="+searchColumn+'&'+searchTerm);
             window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
         }
+
+        function saveComment() {
+            const userComment = document.getElementById('userComment').value;
+            alert(userComment);
+        }
+
+        function mySQLconnection(comment){ // this function sourced from w3schools
+            var mysql = require('mysql');
+
+            var con = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "password"
+            });
+
+            con.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
+
+            const dateTime = getDateTime();
+
+            var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log("1 record inserted");
+            });
+            });
+
+            location.reload();
+        }
+
+        function getDateTime() { // this function sourced from shecodes
+            // create a new `Date` object
+            const now = new Date();
+
+            // get the current date and time as a string
+            const currentDateTime = now.toLocaleString();
+
+            return currentDateTime;
+        }
+
     </script>
 
 </body>

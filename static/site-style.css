@@ -101,61 +101,65 @@
 
 /* nav bar (from w3schools) ************************************************************************************************/
 .topnav {
-    overflow: hidden;
-    background-color: #d0d0d0;
-  }
-  
-  .topnav left {
-    float: left;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
+  overflow: hidden;
+  background-color: #d0d0d0;
+}
 
-  .topnav left:hover {
-    background-color: #d0d0d0;
-    color: black;
-  }
-  
-  .topnav left.active {
-    background-color:rgb(224, 219, 226);
-    color: rgb(0, 0, 0);
-  }
+.topnav left {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
 
-  .topnav left.inactive {
-    background-color:#d0d0d0;
-    color: #e8dced;
-  }
+.topnav left:hover {
+  background-color: #d0d0d0;
+  color: black;
+}
 
-  .topnav right{
-    float: right;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
+.topnav left.active {
+  background-color:rgb(224, 219, 226);
+  color: rgb(0, 0, 0);
+}
+
+.topnav left.inactive {
+  background-color:#d0d0d0;
+  color: #e8dced;
+}
+
+.topnav right{
+  float: right;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
 
 /* table (from w3schools) ************************************************************************************************/
-  .table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    overflow-y:scroll;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+.table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  overflow-y:scroll;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 
 
-  
+textarea {
+  resize: none;
+  height: 300px;
+  width: 500px
+}

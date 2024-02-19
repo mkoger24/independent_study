@@ -88,11 +88,11 @@ def display():
         mycursor.execute(bookInfoQuery) 
         bookdb = mycursor.fetchall() 
 
-        commentQuery = "SELECT * FROM comments WHERE ElectronicISBN = '" + isbn + "';"
+        commentQuery = "SELECT * FROM comments WHERE ISBN = '" + isbn + "';"
         mycursor = mydb.cursor() 
         mycursor.execute(commentQuery) 
         commentdb = mycursor.fetchall() 
-        return render_template("details.html", bookdb = bookdb, commentdb = commentdb)
+        return render_template("details.html", bookdb = bookdb, commentdb = commentdb, isbn = isbn)
     
     except Exception as e: 
         return(str(e))
