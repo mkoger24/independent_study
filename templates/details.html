@@ -29,8 +29,8 @@
 
     </div>
 
-    <div>
-        {% for row in dbhtml %}
+    <div style="float: left;">
+        {% for row in bookdb %}
 
         <h>{{row.0}}</h>
         <p>{{row.1}}</p>
@@ -43,6 +43,15 @@
         <p>{{row.8}}</p>
         <p>{{row.9}}</p>
         <p>{{row.10}}</p>
+        {% endfor %}
+    </div>
+
+    <div style="float: right;">
+        {% for row in commentdb %}
+        
+        <b>{{row.3}}{{row.2}}</b>
+        <p>{{row.1}}</p>
+
         {% endfor %}
     </div>
 
