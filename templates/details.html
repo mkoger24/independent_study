@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details Page</title>
     <link rel="stylesheet" href="static/site-style.css">
-    
+    <!-- <script type = "text/javascript" src="sqlconnect.js"></script> -->
+    <!-- <script>
+        import { userComment, saveComment } from 'sqlconnect.js';
+    </script> -->
 </head>
 <body>
     <div class="header">
@@ -52,16 +55,35 @@
         <textarea id="userComment" placeholder="Enter a comment"></textarea>
         <br>
         <button onclick="saveComment()">Save Comment</button>
+        <br><br><br>
 
         {% for row in commentdb %}
         
-        <b>{{row.3}}{{row.2}}</b>
+        <b>{{row.3}}&nbsp;&nbsp;{{row.2}}</b>
         <p>{{row.1}}</p>
 
         {% endfor %}
     </div>
 
+    <script type="py" terminal>
+        def addComment(comment, dateTime):
+            mydb = mysql.connector.connect( 
+                host = "localhost", 
+                user = "root", 
+                password = "password", 
+                database = "bookLib",
+                auth_plugin='mysql_native_password'
+            )
+
+            query = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
+            mycursor = mydb.cursor() 
+            mycursor.execute(query) 
+            dbhtml = mycursor.fetchall() 
+            return render_template("search.html", dbhtml = dbhtml)
+    </script>
+
     <script>
+        // import { addComment } from 'sqlconnect.js';
         // reloads the page, allowing for the use of url parameters for searching
         function redirect() {
             // alert();
@@ -73,33 +95,37 @@
 
         function saveComment() {
             const userComment = document.getElementById('userComment').value;
-            alert(userComment);
-        }
-
-        function mySQLconnection(comment){ // this function sourced from w3schools
-            var mysql = require('mysql');
-
-            var con = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "password"
-            });
-
-            con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!");
-
+            // alert(userComment);
             const dateTime = getDateTime();
-
-            var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
-                console.log("1 record inserted");
-            });
-            });
-
+            addComment(userComment, dateTime);
             location.reload();
+
         }
+
+        // function addComment(comment){ // this function sourced from w3schools
+        //     var mysql = require('mysql'); // TODO: fix this, this line doesnt work !!
+
+        //     var con = mysql.createConnection({
+        //     host: "localhost",
+        //     user: "root",
+        //     password: "password"
+        //     });
+
+        //     con.connect(function(err) {
+        //     if (err) throw err;
+        //     console.log("Connected!");
+
+        //     const dateTime = getDateTime();
+
+        //     var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
+        //     con.query(sql, function (err, result) {
+        //         if (err) throw err;
+        //         console.log("1 record inserted");
+        //     });
+        //     });
+
+        //     location.reload();
+        // }
 
         function getDateTime() { // this function sourced from shecodes
             // create a new `Date` object
