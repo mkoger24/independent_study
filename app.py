@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
     password = "password", 
     database = "bookLib",
     auth_plugin='mysql_native_password'
-    )
+)
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 

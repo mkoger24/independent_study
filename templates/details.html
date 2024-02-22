@@ -102,30 +102,30 @@
 
         }
 
-        // function addComment(comment){ // this function sourced from w3schools
-        //     var mysql = require('mysql'); // TODO: fix this, this line doesnt work !!
+        function addComment(comment){ // this function sourced from w3schools
+            var mysql = require('mysql'); // TODO: fix this, this line doesnt work !!
 
-        //     var con = mysql.createConnection({
-        //     host: "localhost",
-        //     user: "root",
-        //     password: "password"
-        //     });
+            var con = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "password"
+            });
 
-        //     con.connect(function(err) {
-        //     if (err) throw err;
-        //     console.log("Connected!");
+            con.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
 
-        //     const dateTime = getDateTime();
+            const dateTime = getDateTime();
 
-        //     var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
-        //     con.query(sql, function (err, result) {
-        //         if (err) throw err;
-        //         console.log("1 record inserted");
-        //     });
-        //     });
+            var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log("1 record inserted");
+            });
+            });
 
-        //     location.reload();
-        // }
+            location.reload();
+        }
 
         function getDateTime() { // this function sourced from shecodes
             // create a new `Date` object
