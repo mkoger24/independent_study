@@ -52,7 +52,11 @@ def searchTerm():
         # TODO add popup here, or just display all entries?
         # TODO logical operation needs changed
         if searchTerm == None:
-            return "must enter a search term"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            mycursor = mydb.cursor() 
+            mycursor.execute(query) 
+            dbhtml = mycursor.fetchall() 
+            return render_template("search.html", dbhtml = dbhtml)
 
         # specifying a query to use based on the intended column to search
         elif column == 'BookTitle':
@@ -68,6 +72,9 @@ def searchTerm():
         # TODO test this functionality
         elif column == 'All':
             query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
+        
+        else:
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
 
         # run the query and return the template
         mycursor = mydb.cursor() 
@@ -116,7 +123,13 @@ def display():
             mycursor = mydb.cursor() 
             mycursor.execute(commentQuery) 
             commentdb = mycursor.fetchall() 
-            return render_template("details.html", bookdb = bookdb, commentdb = commentdb, id = id)
+            
+            tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+            mycursor = mydb.cursor() 
+            mycursor.execute(tagQuery) 
+            tagdb = mycursor.fetchall() 
+
+            return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
         else:
 
             id = request.args.get("q")
@@ -129,7 +142,13 @@ def display():
             mycursor = mydb.cursor() 
             mycursor.execute(commentQuery) 
             commentdb = mycursor.fetchall() 
-            return render_template("details.html", bookdb = bookdb, commentdb = commentdb, id = id)
+
+            tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+            mycursor = mydb.cursor() 
+            mycursor.execute(tagQuery) 
+            tagdb = mycursor.fetchall() 
+
+            return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
     
     except Exception as e: 
         return(str(e))

@@ -52,7 +52,7 @@
 
 .float-right{
     float: right;
-    padding: 5px;
+    padding: 20px;
 }
 
 .float-center{
@@ -97,6 +97,12 @@
   background: #23463f;  
   border-radius: 15px ;  
           
+}
+
+textarea {
+  resize: none;
+  height: 300px;
+  width: 500px;
 }
 
 /* nav bar (from w3schools) ************************************************************************************************/
@@ -155,11 +161,4 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-
-
-textarea {
-  resize: none;
-  height: 300px;
-  width: 500px
 }
