@@ -36,14 +36,16 @@
             <table id="fullTable" border="1" style="border-spacing: 0; width:100%;">
                 <tr align="center">
                     <td width="5%">id</td>
-                    <td width="70%">BookTitle</td>
+                    <td width="60%">BookTitle</td>
                     <td width="25%">Author</td>
+                    <td width="10%">Copyright Year</td>
                 </tr>
                 {% for row in dbhtml %}
                 <tr>
                     <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.0}}</td>
                     <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.2}}</td>
                     <td id="{{row.3}}" onclick='searchAuthor({{row.3}})'>{{row.3}}</td>
+                    <td>{{row.4}}</td>
                 </tr>
                 {% endfor %}
             </table>

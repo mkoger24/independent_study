@@ -10,6 +10,8 @@ mydb = mysql.connector.connect(
     auth_plugin='mysql_native_password'
 )
 
+login = False
+
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 
@@ -27,7 +29,7 @@ def home():
     
     # if there are no specified search parameters, display all entries
         if column=='':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
@@ -36,7 +38,7 @@ def home():
         # TODO add popup here, or just display all entries?
         # TODO logical operation needs changed
         if searchTerm == None:
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
@@ -44,24 +46,24 @@ def home():
 
         # specifying a query to use based on the intended column to search
         elif column == 'BookTitle':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like '%" + searchTerm + "%';"
 
         elif column == 'ElectronicISBN':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
 
         elif column == 'Author':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE Author like '%" + searchTerm + "%';"
 
         elif column == 'CopyrightYear':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
 
         # if all columns is specified
         # TODO test this functionality
         elif column == 'All':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
         
         else:
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
 
         # run the query and return the template
         mycursor = mydb.cursor() 
@@ -90,7 +92,7 @@ def searchTerm():
         
         # if there are no specified search parameters, display all entries
         else:
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
@@ -99,7 +101,7 @@ def searchTerm():
         # TODO add popup here, or just display all entries?
         # TODO logical operation needs changed
         if searchTerm == None:
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
@@ -107,24 +109,24 @@ def searchTerm():
 
         # specifying a query to use based on the intended column to search
         elif column == 'BookTitle':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like '%" + searchTerm + "%';"
 
         elif column == 'ElectronicISBN':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
 
         elif column == 'Author':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE Author like '%" + searchTerm + "%';"
 
         elif column == 'CopyrightYear':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
 
         # if all columns is specified
         # TODO test this functionality
         elif column == 'All':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
         
         else:
-            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
 
         # run the query and return the template
         mycursor = mydb.cursor() 
