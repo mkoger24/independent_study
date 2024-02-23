@@ -52,10 +52,18 @@
 
     <div style="float: right;">
 
-        <textarea id="userComment" placeholder="Enter a comment"></textarea>
+        {% block content %}
+        <form action="#" method="post">
+            <textarea name="userComment" placeholder="Enter a comment"></textarea>
+            <br>
+            <p><input type="submit" value="submit"/></p>
+        </form>
+        {% endblock %}
+
+        <!-- <textarea id="userComment" placeholder="Enter a comment"></textarea>
         <br>
         <button onclick="saveComment()">Save Comment</button>
-        <br><br><br>
+        <br><br><br> -->
 
         {% for row in commentdb %}
         
@@ -64,23 +72,6 @@
 
         {% endfor %}
     </div>
-
-    <script type="py" terminal>
-        def addComment(comment, dateTime):
-            mydb = mysql.connector.connect( 
-                host = "localhost", 
-                user = "root", 
-                password = "password", 
-                database = "bookLib",
-                auth_plugin='mysql_native_password'
-            )
-
-            query = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
-            mycursor = mydb.cursor() 
-            mycursor.execute(query) 
-            dbhtml = mycursor.fetchall() 
-            return render_template("search.html", dbhtml = dbhtml)
-    </script>
 
     <script>
         // import { addComment } from 'sqlconnect.js';

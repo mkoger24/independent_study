@@ -34,15 +34,15 @@
         <div style="border:1px solid black;height:620px;width:100%;overflow-y:hidden;overflow-y: scroll;">
             <table id="fullTable" border="1" style="border-spacing: 0;">
                 <tr align="center">
-                    <td>Electronic ISBN</td>
+                    <td>id</td>
                     <td>BookTitle</td>
                     <td>Author</td>
                 </tr>
                 {% for row in dbhtml %}
                 <tr>
-                    <td id="isbn">{{row.0}}</td>
-                    <td onclick='details()'>{{row.1}}</td>
-                    <td>{{row.2}}</td>
+                    <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.0}}</td>
+                    <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.2}}</td>
+                    <td>{{row.3}}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -56,10 +56,10 @@
                 window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
             }
 
-            function details() {
-                const electronicISBN = document.getElementById('isbn').value;
-                alert(electronicISBN);
-                // window.location.href="details.html?q="+electronicISBN;
+            function details(id) {
+                // const electronicISBN = document.getElementById('id').value;
+                // alert(id);
+                window.location.href="details.html?q="+id;
             }
         </script>
 
