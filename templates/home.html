@@ -20,18 +20,20 @@
 
         <div class="header">
     
-            <label for="searchColumn">Search by Column:</label>
-            <select id="searchColumn">
-                <option value="all">All Columns</option>
-                <option value="ElectronicISBN">Electronic ISBN</option>
-                <option value="BookTitle">Title</option>
-                <option value="Author">Author</option>
-                <option value="CopyrightYear">Copyright Year</option>
-            </select>
-            <input type="text" id="searchTerm" placeholder="Enter search term" oninput="searchTable()">
-            <!-- <button onclick="searchTable()">Search</button> -->
-            <button onclick="redirect()">Search</button>
-
+            <form action="#" method="post">
+                <label for="searchColumn">Search by Column:</label>
+                <select name="searchColumn"id="searchColumn">
+                    <option value="all">All Columns</option>
+                    <option value="ElectronicISBN">Electronic ISBN</option>
+                    <option value="BookTitle">Title</option>
+                    <option value="Author">Author</option>
+                    <option value="CopyrightYear">Copyright Year</option>
+                </select>
+                <input name="searchTerm"type="text" id="searchTerm" placeholder="Enter search term">
+                <!-- <button onclick="searchTable()">Search</button> -->
+                <!-- <button onclick="redirect()">Search</button> -->
+                <input type="submit" value="submit"/></p>
+            </form>
             <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
         </div>
         <div class="right">

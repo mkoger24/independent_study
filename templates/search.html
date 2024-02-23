@@ -15,19 +15,20 @@
             <a href="home.html">
                 <div class="header">Mae's Digital Library</div>
             </a>
-    
-            <label for="searchColumn">Search by Column:</label>
-            <select id="searchColumn">
-                <option value="all">All Columns</option>
-                <option value="ElectronicISBN">Electronic ISBN</option>
-                <option value="BookTitle">Title</option>
-                <option value="Author">Author</option>
-                <option value="CopyrightYear">Copyright Year</option>
-            </select>
-            <input type="text" id="searchTerm" placeholder="Enter search term" oninput="searchTable()">
-            <!-- <button onclick="searchTable()">Search</button> -->
-            <button onclick="redirect()">Search</button>
-
+            <form action="#" method="post">
+                <label for="searchColumn">Search by Column:</label>
+                <select name="searchColumn"id="searchColumn">
+                    <option value="all">All Columns</option>
+                    <option value="ElectronicISBN">Electronic ISBN</option>
+                    <option value="BookTitle">Title</option>
+                    <option value="Author">Author</option>
+                    <option value="CopyrightYear">Copyright Year</option>
+                </select>
+                <input name="searchTerm"type="text" id="searchTerm" placeholder="Enter search term">
+                <!-- <button onclick="searchTable()">Search</button> -->
+                <!-- <button onclick="redirect()">Search</button> -->
+                <input type="submit" value="submit"/></p>
+            </form>
             <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
         </div>
 
@@ -35,14 +36,14 @@
             <table id="fullTable" border="1" style="border-spacing: 0; width:100%;">
                 <tr align="center">
                     <td width="5%">id</td>
-                    <td width="80%">BookTitle</td>
-                    <td width="15%">Author</td>
+                    <td width="70%">BookTitle</td>
+                    <td width="25%">Author</td>
                 </tr>
                 {% for row in dbhtml %}
                 <tr>
                     <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.0}}</td>
                     <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.2}}</td>
-                    <td>{{row.3}}</td>
+                    <td id="{{row.3}}" onclick='searchAuthor({{row.3}})'>{{row.3}}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -53,13 +54,18 @@
             function redirect() {
                 const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
                 const searchColumn = document.getElementById('searchColumn').value;
-                window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
+                window.location.href="search.html?q="+searchColumn+'%'+searchTerm;
             }
 
             function details(id) {
                 // const electronicISBN = document.getElementById('id').value;
                 // alert(id);
                 window.location.href="details.html?q="+id;
+            }
+
+            function searchAuthor(author) {
+                alert(author);
+                // window.location.href="search.html?q=Author%"+author;
             }
         </script>
 

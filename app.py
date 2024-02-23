@@ -17,15 +17,64 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 def index():
     return render_template("home.html")
 
-@app.route('/home.html', methods=['GET'])
+@app.route('/home.html', methods=['GET',"POST"])
 def home():
+    if request.method == "POST":
+        column = request.form["searchColumn"]
+        searchTerm = request.form['searchTerm']
+        print('column: ',column)
+        print('searchTerm:', searchTerm)
+    
+    # if there are no specified search parameters, display all entries
+        if column=='':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            mycursor = mydb.cursor() 
+            mycursor.execute(query) 
+            dbhtml = mycursor.fetchall() 
+            return render_template("search.html", dbhtml = dbhtml)
+
+        # TODO add popup here, or just display all entries?
+        # TODO logical operation needs changed
+        if searchTerm == None:
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+            mycursor = mydb.cursor() 
+            mycursor.execute(query) 
+            dbhtml = mycursor.fetchall() 
+            return render_template("search.html", dbhtml = dbhtml)
+
+        # specifying a query to use based on the intended column to search
+        elif column == 'BookTitle':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like '%" + searchTerm + "%';"
+
+        elif column == 'ElectronicISBN':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE ElectronicISBN like '%" + searchTerm + "%';"
+
+        elif column == 'Author':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
+
+        elif column == 'CopyrightYear':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
+
+        # if all columns is specified
+        # TODO test this functionality
+        elif column == 'All':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
+        
+        else:
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books;"
+
+        # run the query and return the template
+        mycursor = mydb.cursor() 
+        mycursor.execute(query) 
+        dbhtml = mycursor.fetchall() 
+        return render_template("search.html", dbhtml = dbhtml)
     return render_template("home.html")
 
 @app.route('/login.html', methods=['GET'])
 def login():
     return render_template("login.html")
 
-@app.route('/search.html', methods=['GET'])
+@app.route('/search.html', methods=['GET','POST'])
 def searchTerm():
 
     try: 
@@ -33,13 +82,11 @@ def searchTerm():
         arguments = request.args.get("q")
 
         # if there are arguments, store them in column and searchTerm
-        if arguments:
-            search = arguments.split('.')
-            print(search)
-            column = search[0]
-            searchTerm = search[1]
-            print(column)
-            print(searchTerm)
+        if request.method == "POST":
+            column = request.form["searchColumn"]
+            searchTerm = request.form['searchTerm']
+            print('column: ',column)
+            print('searchTerm:', searchTerm)
         
         # if there are no specified search parameters, display all entries
         else:
@@ -67,6 +114,9 @@ def searchTerm():
 
         elif column == 'Author':
             query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE Author like '%" + searchTerm + "%';"
+
+        elif column == 'CopyrightYear':
+            query = "SELECT id, ElectronicISBN, BookTitle, Author FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
 
         # if all columns is specified
         # TODO test this functionality
