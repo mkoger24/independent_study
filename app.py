@@ -93,6 +93,7 @@ def display():
         if request.method == "POST":
             id = request.args.get("q")
             comment = request.form["userComment"]
+            tag = request.form['userTag']
 
             now = datetime.datetime.now()
 
@@ -107,29 +108,101 @@ def display():
                 minute = str(minute)
             dateTime = month +"-"+ day +"-"+ year +" "+ hour +":"+ minute
 
+            if comment != '' and tag != '':
 
-            query = "INSERT INTO comments (book_id, Comment, DateTime, User) VALUES ('" + id + "', '" + comment +"', '" + dateTime + "', 'testuser');"
-            mycursor = mydb.cursor() 
-            mycursor.execute(query) 
-            bookdb = mycursor.fetchall() 
+                query = "INSERT INTO comments (book_id, Comment, DateTime, User) VALUES ('" + id + "', '" + comment +"', '" + dateTime + "', 'testuser');"
+                mycursor = mydb.cursor() 
+                mycursor.execute(query) 
+                bookdb = mycursor.fetchall() 
 
-            id = request.args.get("q")
-            bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
-            mycursor = mydb.cursor() 
-            mycursor.execute(bookInfoQuery) 
-            bookdb = mycursor.fetchall() 
+                query = "INSERT INTO tags () VALUES ('" + id + "', '" + tag +"');"
+                mycursor = mydb.cursor() 
+                mycursor.execute(query) 
+                bookdb = mycursor.fetchall() 
 
-            commentQuery = "SELECT * FROM comments WHERE book_id = '" + id + "';"
-            mycursor = mydb.cursor() 
-            mycursor.execute(commentQuery) 
-            commentdb = mycursor.fetchall() 
-            
-            tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
-            mycursor = mydb.cursor() 
-            mycursor.execute(tagQuery) 
-            tagdb = mycursor.fetchall() 
+                id = request.args.get("q")
+                bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(bookInfoQuery) 
+                bookdb = mycursor.fetchall() 
 
-            return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+                commentQuery = "SELECT * FROM comments WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(commentQuery) 
+                commentdb = mycursor.fetchall() 
+                
+                tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(tagQuery) 
+                tagdb = mycursor.fetchall() 
+
+                return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+            elif comment != '' and tag == '':
+
+                query = "INSERT INTO comments (book_id, Comment, DateTime, User) VALUES ('" + id + "', '" + comment +"', '" + dateTime + "', 'testuser');"
+                mycursor = mydb.cursor() 
+                mycursor.execute(query) 
+                bookdb = mycursor.fetchall() 
+
+                id = request.args.get("q")
+                bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(bookInfoQuery) 
+                bookdb = mycursor.fetchall() 
+
+                commentQuery = "SELECT * FROM comments WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(commentQuery) 
+                commentdb = mycursor.fetchall() 
+                
+                tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(tagQuery) 
+                tagdb = mycursor.fetchall() 
+
+                return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+            elif comment == '' and tag != '': 
+
+                query = "INSERT INTO tags () VALUES ('" + id + "', '" + tag +"');"
+                mycursor = mydb.cursor() 
+                mycursor.execute(query) 
+                bookdb = mycursor.fetchall() 
+
+                id = request.args.get("q")
+                bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(bookInfoQuery) 
+                bookdb = mycursor.fetchall() 
+
+                commentQuery = "SELECT * FROM comments WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(commentQuery) 
+                commentdb = mycursor.fetchall() 
+                
+                tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(tagQuery) 
+                tagdb = mycursor.fetchall() 
+
+                return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+            else:
+                id = request.args.get("q")
+                bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(bookInfoQuery) 
+                bookdb = mycursor.fetchall() 
+
+                commentQuery = "SELECT * FROM comments WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(commentQuery) 
+                commentdb = mycursor.fetchall() 
+
+                tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(tagQuery) 
+                tagdb = mycursor.fetchall() 
+
+                return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
         else:
 
             id = request.args.get("q")

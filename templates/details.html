@@ -51,24 +51,24 @@
         {% endfor %}
     </div>
 
-    <div style="float: right;">
+    <div style="float: right; padding-right: 150px;">
 
         {% block comment %}
-
-            <tr>
-                <td><b>Tags:</b></td>
-                {% for row in tagdb %}
-                    <td>{{row.0}}</td>
-                    <td>{{row.1}}</td>
-                    <td>{{row.2}}</td>
-                    <td>{{row.3}}</td>
-                    <td>{{row.4}}</td>
-                    <td>{{row.5}}</td>
-                    <td>{{row.6}}</td>
-                    <td>{{row.7}}</td>
-                {% endfor %}
-            </tr>
             <form action="#" method="post">
+                <tr>
+                    <td><b>Tags:</b></td>
+                    {% for row in tagdb %}
+                        <td>{{row.0}}</td>
+                        <td>{{row.1}}</td>
+                        <td>{{row.2}}</td>
+                        <td>{{row.3}}</td>
+                        <td>{{row.4}}</td>
+                        <td>{{row.5}}</td>
+                        <td>{{row.6}}</td>
+                        <td>{{row.7}}</td>
+                    {% endfor %}
+                </tr>
+                <br>
 
                 <textarea name="userTag" placeholder="Enter a tag" style="height:20px;width:80px"></textarea>
                 <br>
