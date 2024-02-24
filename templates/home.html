@@ -23,9 +23,9 @@
             <form action="#" method="post">
                 <label for="searchColumn">Search by Column:</label>
                 <select name="searchColumn"id="searchColumn">
-                    <option value="all">All Columns</option>
-                    <option value="ElectronicISBN">Electronic ISBN</option>
+                    <!-- <option value="all">All Columns</option> -->
                     <option value="BookTitle">Title</option>
+                    <option value="ElectronicISBN">Electronic ISBN</option>
                     <option value="Author">Author</option>
                     <option value="CopyrightYear">Copyright Year</option>
                 </select>
@@ -40,17 +40,57 @@
             <a href="search.html">
                 <button class="active" type="button">Database</button>
             </a>
-            <a href="login.html">
+            <br>
+            <!-- <a href="login.html">
+
                 <right class="active" href="login.html"><button type="button">Login</button></right>
-            </a>
+            </a> -->
+            <!-- <a href="login.html">
+                <right id='isnotloggedin'class="active" href="login.html"><button type="button">Login</button></right>
+                <right id='isloggedin'class="active" href="login.html"><button type="button">Logout</button></right>
+            </a> -->
         </div>
     </div>
+
+    <!-- <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <br> -->
 
     <p>
         Mae's Digital Library, created in 2023-2024, is a digital library that focuses on the use of collaboration in an academic setting. This site allows users to search for and collaborate on literature and have academic discussions about them.
     </p>
 
     <script>
+        window.onload = function (){
+            if(isloggedin){
+                // document.getElementById('isnotloggedin').style.display = "none";
+                // document.getElementById('isloggedin').style.display = "";
+                document.getElementById("isnotloggedin").hidden=false;
+                document.getElementById("isloggedin").hidden=true
+            }
+            else{
+                // document.getElementById('isloggedin').style.display = "none";
+                // document.getElementById('isnotloggedin').style.display = "";
+                document.getElementById("isnotloggedin").hidden=true;
+                document.getElementById("isloggedin").hidden=false
+            }
+        }
+        // if(isloggedin) {
+        //     document.getElementById("isloggedin").style.display = "none";
+        //     document.getElementById("isnotloggedin").style.display = "";
+        //     } 
+        // else {
+        //     document.getElementById("isloggedin").style.display = "";
+        //     document.getElementById("isnotloggedin").style.display = "none";
+        // }
         // reloads the page, allowing for the use of url parameters for searching
         function redirect() {
             // alert();

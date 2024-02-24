@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_file, redirect, request#
 import mysql.connector
 import datetime
 
+# establish connection to sql server
 mydb = mysql.connector.connect( 
     host = "localhost", 
     user = "root", 
@@ -9,8 +10,6 @@ mydb = mysql.connector.connect(
     database = "bookLib",
     auth_plugin='mysql_native_password'
 )
-
-login = False
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -21,22 +20,20 @@ def index():
 
 @app.route('/home.html', methods=['GET',"POST"])
 def home():
+    # if the user performs a search from the home page, run the query and render the search page
     if request.method == "POST":
         column = request.form["searchColumn"]
         searchTerm = request.form['searchTerm']
         print('column: ',column)
         print('searchTerm:', searchTerm)
     
-    # if there are no specified search parameters, display all entries
+        # if there are no specified search parameters, display all entries
         if column=='':
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
             dbhtml = mycursor.fetchall() 
             return render_template("search.html", dbhtml = dbhtml)
-
-        # TODO add popup here, or just display all entries?
-        # TODO logical operation needs changed
         if searchTerm == None:
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
@@ -56,12 +53,10 @@ def home():
 
         elif column == 'CopyrightYear':
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
-
-        # if all columns is specified
-        # TODO test this functionality
-        elif column == 'All':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
         
+        # if no specified search parameters, show all entries
+        # this should, in theory, never execute as there will always be a column selected
+            # so, do i need to keep this here?
         else:
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
 
@@ -70,6 +65,8 @@ def home():
         mycursor.execute(query) 
         dbhtml = mycursor.fetchall() 
         return render_template("search.html", dbhtml = dbhtml)
+    
+    # if method == 'GET' render home page
     return render_template("home.html")
 
 @app.route('/login.html', methods=['GET'])
@@ -80,10 +77,7 @@ def login():
 def searchTerm():
 
     try: 
-        # get all arguments from url
-        arguments = request.args.get("q")
-
-        # if there are arguments, store them in column and searchTerm
+        # if there was a search, store column and searchTerm from form
         if request.method == "POST":
             column = request.form["searchColumn"]
             searchTerm = request.form['searchTerm']
@@ -98,8 +92,9 @@ def searchTerm():
             dbhtml = mycursor.fetchall() 
             return render_template("search.html", dbhtml = dbhtml)
 
-        # TODO add popup here, or just display all entries?
-        # TODO logical operation needs changed
+        # if no specified search parameters, show all entries
+        # this should, in theory, never execute as there will always be a column selected
+            # so, do i need to keep this here?
         if searchTerm == None:
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
@@ -119,12 +114,10 @@ def searchTerm():
 
         elif column == 'CopyrightYear':
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE CopyrightYear like '%" + searchTerm + "%';"
-
-        # if all columns is specified
-        # TODO test this functionality
-        elif column == 'All':
-            query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE BookTitle like'%" + searchTerm + "%' or WHERE ElectronicISBN like'%" + searchTerm + "%' or WHERE Author like '%" + searchTerm + "%';"
         
+        # if no specified search parameters, show all entries
+        # this should, in theory, never execute as there will always be a column selected
+            # so, do i need to keep this here?
         else:
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
 
@@ -142,13 +135,14 @@ def searchTerm():
 def display():
 
     try:
+        # if the user enters a comment and/or tag
         if request.method == "POST":
             id = request.args.get("q")
             comment = request.form["userComment"]
             tag = request.form['userTag']
 
+            # getting date and time for comment table
             now = datetime.datetime.now()
-
             month = str(now.month) 
             day = str(now.day) 
             year = str(now.year)
@@ -160,17 +154,20 @@ def display():
                 minute = str(minute)
             dateTime = month +"-"+ day +"-"+ year +" "+ hour +":"+ minute
 
+            # if comment and tag are submitted
             if comment != '' and tag != '':
 
                 query = "INSERT INTO comments (book_id, Comment, DateTime, User) VALUES ('" + id + "', '" + comment +"', '" + dateTime + "', 'testuser');"
                 mycursor = mydb.cursor() 
-                mycursor.execute(query) 
-                bookdb = mycursor.fetchall() 
+                mycursor.execute(query)
+                bookdb = mycursor.fetchall()
+                mydb.commit() 
 
                 query = "INSERT INTO tags () VALUES ('" + id + "', '" + tag +"');"
                 mycursor = mydb.cursor() 
-                mycursor.execute(query) 
-                bookdb = mycursor.fetchall() 
+                mycursor.execute(query)
+                bookdb = mycursor.fetchall()
+                mydb.commit()  
 
                 id = request.args.get("q")
                 bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
@@ -189,12 +186,15 @@ def display():
                 tagdb = mycursor.fetchall() 
 
                 return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+            
+            # if comment and no tag
             elif comment != '' and tag == '':
 
                 query = "INSERT INTO comments (book_id, Comment, DateTime, User) VALUES ('" + id + "', '" + comment +"', '" + dateTime + "', 'testuser');"
                 mycursor = mydb.cursor() 
                 mycursor.execute(query) 
                 bookdb = mycursor.fetchall() 
+                mydb.commit() 
 
                 id = request.args.get("q")
                 bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"
@@ -210,15 +210,18 @@ def display():
                 tagQuery = "SELECT Tag FROM tags WHERE book_id = '" + id + "';"
                 mycursor = mydb.cursor() 
                 mycursor.execute(tagQuery) 
-                tagdb = mycursor.fetchall() 
+                tagdb = mycursor.fetchall()
 
                 return render_template("details.html", bookdb = bookdb, commentdb = commentdb, tagdb = tagdb, id = id)
+            
+            # if tag and no comment
             elif comment == '' and tag != '': 
 
                 query = "INSERT INTO tags () VALUES ('" + id + "', '" + tag +"');"
                 mycursor = mydb.cursor() 
-                mycursor.execute(query) 
+                mycursor.execute(query)
                 bookdb = mycursor.fetchall() 
+                mydb.commit() 
 
                 id = request.args.get("q")
                 bookInfoQuery = "SELECT * FROM books WHERE id = '" + id + "';"

@@ -5,100 +5,36 @@
     <link rel="stylesheet" href="static/site-style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            text-align: center;
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            /* background-color: #d0d0d0; */
-        }
-
-        .header {
-            background-color: #d0d0d0;
-            padding: 20px;
-            font-size: 10px;
-            text-align: center;
-            color: rgb(0, 0, 0);
-        }
-
-        .topnav {
-            overflow: hidden;
-            background-color: #d0d0d0;
-        }
-
-        .right {
-            float: right;
-            color: #000000;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .left {
-            float: left;
-            color: #000000;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        p {
-            padding: 15px;
-            text-align: left;
-        }
-
-        .login {
-            border: 2px solid #d0d0d0;
-            border-radius: 13px;
-            width: 230px;
-            height: 300px;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px 0;
-            text-align: center;
-            background-color: #fff;
-        }
-
-        /* Adjust input styles */
-        input {
-            width: 80%;
-            padding: 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        /* Style the login button
-        button {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            width: 80%;
-            border-radius: 4px;
-        } */
-
-        /* button:hover {
-            background-color: #45a049;
-        } */
-    </style>
 </head>
 <body>
     <div class="header">
         <a href="home.html"><div class="header">Mae's Digital Library</div></a>
     </div>
 
-    <div class="login">
+    <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <br>
+
+    <form action="#" method="POST">
+        <textarea name="username" placeholder="Username" style="height:20px;width:120px;"></textarea>
+        <br>
+        <textarea name="password" placeholder="Password" style="height:20px;width:120px;"></textarea>
+        <br>
+        <a href="register.html">
+            <p>Create account</p>
+        </a>
+        <p><input type="submit" value="submit"></p>
+    </form>
+
+    <!-- <div class="login">
         <form id="loginForm">
             <input type="text" id="email" name="email" placeholder="Email" required><br><br>
             <input type="password" id="password" name="password" placeholder="Password" required><br><br>
@@ -123,6 +59,6 @@
                 alert('Invalid login. Please enter valid credentials.');
             }
         }
-    </script>
+    </script> -->
 </body>
 </html>

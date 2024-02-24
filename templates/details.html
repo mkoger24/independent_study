@@ -18,7 +18,12 @@
         <a style="float:left;">
             <button style:"float:left;" onclick="history.back()">Back</button>
         </a>
-        <p>&nbsp;</p>
+        <br>
+        <!-- <a style="float:right" href="login.html">
+            <right id='isnotloggedin'class="active" href="login.html"><button type="button">Login</button></right>
+            <right id='isloggedin'class="active" href="login.html"><button type="button">Logout</button></right>
+        </a> -->
+        <!-- <p>&nbsp;</p> -->
         <!-- <label for="searchColumn">Search by Column:</label>
         <select id="searchColumn">
             <option value="all">All Columns</option>
@@ -40,16 +45,28 @@
         {% for row in bookdb %}
 
             <b>{{row.0}}</b>
-            <p>{{row.1}}</p>
-            <p>{{row.2}}</p>
-            <p>{{row.3}}</p>
-            <p>{{row.4}}</p>
-            <p>{{row.5}}</p>
-            <p>{{row.6}}</p>
-            <p>{{row.7}}</p>
-            <p>{{row.8}}</p>
-            <p>{{row.9}}</p>
-            <p>{{row.10}}</p>
+            <p>Author: {{row.1}}</p>
+            <p>Edition: {{row.2}}</p>
+            <p>Product type: {{row.3}}</p>
+            <p>Copyright year: {{row.4}}</p>
+            <p>Copyright holder: {{row.5}}</p>
+            <p>Print ISBN: {{row.6}}</p>
+            <p>Electronic ISBN: {{row.7}}</p>
+            <p>Language: {{row.8}}</p>
+            <p>eBook collection ID: {{row.9}}</p>
+            <p>eBook Collection Name: {{row.10}}</p>
+            <p>Series ID: {{row.11}}</p>
+            <p>Series print ISSN: {{row.12}}</p>
+            <p>Series electronic ISSN: {{row.13}}</p>
+            <p>Series title: {{row.14}}</p>
+            <p>DOIURL: {{row.16}}</p>
+            <p>Open URL: {{row.17}}</p>
+            <p>Record creation: {{row.18}}</p>
+            <p>Record update: {{row.19}}</p>
+            <p>Publisher: {{row.20}}</p>
+            <p>Imprint: {{row.21}}</p>
+            <!-- <p>Open access: {{row.21}}</p> -->
+
 
         {% endfor %}
     </div>
@@ -88,13 +105,27 @@
 
         {% for row in commentdb %}
         
-            <b>{{row.3}}&nbsp;&nbsp;{{row.2}}</b>
+            <b>{{row.2}}</b>
             <p>{{row.1}}</p>
 
         {% endfor %}
     </div>
 
     <script>
+        // window.onload = function (){
+        //     if(isloggedin){
+        //         // document.getElementById('isnotloggedin').style.display = "none";
+        //         // document.getElementById('isloggedin').style.display = "";
+        //         document.getElementById("isnotloggedin").hidden=false;
+        //         document.getElementById("isloggedin").hidden=true
+        //     }
+        //     else{
+        //         // document.getElementById('isloggedin').style.display = "none";
+        //         // document.getElementById('isnotloggedin').style.display = "";
+        //         document.getElementById("isnotloggedin").hidden=true;
+        //         document.getElementById("isloggedin").hidden=false
+        //     }
+        // }
         // import { addComment } from 'sqlconnect.js';
         // reloads the page, allowing for the use of url parameters for searching
         function redirect() {
