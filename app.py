@@ -80,9 +80,17 @@ def searchTerm():
         # if there was a search, store column and searchTerm from form
         if request.method == "POST":
             column = request.form["searchColumn"]
-            searchTerm = request.form['searchTerm']
+            mysearch = request.form['searchTerm']
             print('column: ',column)
-            print('searchTerm:', searchTerm)
+            print('searchTerm:', mysearch)
+            
+            searchTerm = ""
+            for x in mysearch:
+                if x == "'":
+                    searchTerm = searchTerm + "'" + "'"
+                else:
+                    searchTerm += x
+
         
         # if there are no specified search parameters, display all entries
         else:
@@ -138,7 +146,7 @@ def display():
         # if the user enters a comment and/or tag
         if request.method == "POST":
             id = request.args.get("q")
-            comment = request.form["userComment"]
+            mycomment = request.form["userComment"]
             tag = request.form['userTag']
 
             # getting date and time for comment table
@@ -153,6 +161,14 @@ def display():
             else:
                 minute = str(minute)
             dateTime = month +"-"+ day +"-"+ year +" "+ hour +":"+ minute
+
+            comment = ""
+            for x in mycomment:
+                if x == "'":
+                    comment = comment + "'" + "'"
+                else:
+                    comment += x
+            print(comment)
 
             # if comment and tag are submitted
             if comment != '' and tag != '':

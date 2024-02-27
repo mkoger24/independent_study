@@ -19,6 +19,7 @@
                 <label for="searchColumn" style="font-size: medium;">Search by Column:</label>
                 <select name="searchColumn"id="searchColumn">
                     <!-- <option value="all">All Columns</option> -->
+                    <!-- <option value="none" selected disabled hidden>Select field to search</option> -->
                     <option value="BookTitle">Title</option>
                     <option value="ElectronicISBN">Electronic ISBN</option>
                     <option value="Author">Author</option>
@@ -37,7 +38,7 @@
             <br>
         </div>
 
-        <div style="border:1px solid black;height:620px;width:100%;overflow-y:hidden;overflow-y: scroll;">
+        <div style="border:1px solid black;height:77%;width:100%;overflow-y:hidden;overflow-y: scroll;">
             <table id="fullTable" border="1" style="border-spacing: 0; width:100%;">
                 <tr align="center">
                     <td width="5%">id</td>
@@ -91,7 +92,9 @@
         </script>
 
 
-          
+        <p style="font-size: medium; position:fixed; bottom:0;">
+            Data presented in this site sourced from Springer Nature at <a href="https://metadata.springernature.com/metadata/books" target="_blank">this link</a>.
+        </p>
     </body>
 
 </html>
