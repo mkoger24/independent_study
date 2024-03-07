@@ -48,9 +48,9 @@
                 </tr>
                 {% for row in dbhtml %}
                 <tr>
-                    <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.0}}</td>
-                    <td id="{{row.0}}" onclick='details({{row.0}})'>{{row.2}}</td>
-                    <td id="{{row.3}}" onclick='searchAuthor({{row.3}})'>{{row.3}}</td>
+                    <td id="{{row.0}}" onclick='details({{row.0}})' style="cursor: pointer;">{{row.0}}</td>
+                    <td id="{{row.0}}" onclick='details({{row.0}})' style="cursor: pointer;">{{row.2}}</td>
+                    <td id="{{row.3}}" onclick='searchAuthor({{row.3}})' style="cursor: pointer;">{{row.3}}</td>
                     <td>{{row.4}}</td>
                 </tr>
                 {% endfor %}
