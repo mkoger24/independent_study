@@ -297,6 +297,11 @@ def display():
     except Exception as e: 
         return(str(e))
 
+@app.route('/download')
+def download():
+    path = '2024_koger_mae.pdf'
+    return send_file(path, as_attachment=True)
+
 # @app.route('/', methods=['POST'])
 
 if __name__ == '__main__':
