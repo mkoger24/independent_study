@@ -18,23 +18,15 @@
             <form action="#" method="post">
                 <label for="searchColumn" style="font-size: medium;">Search by Column:</label>
                 <select name="searchColumn"id="searchColumn">
-                    <!-- <option value="all">All Columns</option> -->
-                    <!-- <option value="none" selected disabled hidden>Select field to search</option> -->
                     <option value="BookTitle">Title</option>
                     <option value="ElectronicISBN">Electronic ISBN</option>
                     <option value="Author">Author</option>
                     <option value="CopyrightYear">Copyright Year</option>
                 </select>
                 <input name="searchTerm"type="text" id="searchTerm" placeholder="Enter search term">
-                <!-- <button onclick="searchTable()">Search</button> -->
-                <!-- <button onclick="redirect()">Search</button> -->
                 <input type="submit" value="submit"/></p>
             </form>
             <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
-            <!-- <a style="float:right" href="login.html">
-                <right id='isnotloggedin'class="active" href="login.html"><button type="button">Login</button></right>
-                <right id='isloggedin'class="active" href="login.html"><button type="button">Logout</button></right>
-            </a> -->
             <br>
         </div>
 
@@ -58,20 +50,7 @@
         </div>
 
         <script>
-            // window.onload = function (){
-            //     if(isloggedin){
-            //         // document.getElementById('isnotloggedin').style.display = "none";
-            //         // document.getElementById('isloggedin').style.display = "";
-            //         document.getElementById("isnotloggedin").hidden=false;
-            //         document.getElementById("isloggedin").hidden=true
-            //     }
-            //     else{
-            //         // document.getElementById('isloggedin').style.display = "none";
-            //         // document.getElementById('isnotloggedin').style.display = "";
-            //         document.getElementById("isnotloggedin").hidden=true;
-            //         document.getElementById("isloggedin").hidden=false
-            //     }
-            // }
+
             // reloads the page, allowing for the use of url parameters for searching
             function redirect() {
                 const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
