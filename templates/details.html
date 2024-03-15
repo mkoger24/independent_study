@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details Page</title>
     <link rel="stylesheet" href="static/site-style.css">
-    <!-- <script type = "text/javascript" src="sqlconnect.js"></script> -->
-    <!-- <script>
-        import { userComment, saveComment } from 'sqlconnect.js';
-    </script> -->
 </head>
 <body>
     <div class="header">
@@ -19,22 +15,6 @@
             <button style:"float:left;" onclick="history.back()">Back</button>
         </a>
         <br>
-        <!-- <a style="float:right" href="login.html">
-            <right id='isnotloggedin'class="active" href="login.html"><button type="button">Login</button></right>
-            <right id='isloggedin'class="active" href="login.html"><button type="button">Logout</button></right>
-        </a> -->
-        <!-- <p>&nbsp;</p> -->
-        <!-- <label for="searchColumn">Search by Column:</label>
-        <select id="searchColumn">
-            <option value="all">All Columns</option>
-            <option value="ElectronicISBN">Electronic ISBN</option>
-            <option value="BookTitle">Title</option>
-            <option value="Author">Author</option>
-            <option value="CopyrightYear">Copyright Year</option>
-        </select>
-        <input type="text" id="searchTerm" placeholder="Enter search term" oninput="searchTable()">
-        <button onclick="searchTable()">Search</button> -->
-        <!-- <button onclick="redirect()">Search</button> -->
 
         <div id="noResultsMessage" style="display: none; color: red;">No results found</div>
 
@@ -65,7 +45,6 @@
             <p>Record update: {{row.19}}</p>
             <p>Publisher: {{row.20}}</p>
             <p>Imprint: {{row.21}}</p>
-            <!-- <p>Open access: {{row.21}}</p> -->
 
 
         {% endfor %}
@@ -74,34 +53,23 @@
     <div style="float: right; padding-right: 150px;">
 
         {% block comment %}
-            <form action="#" method="post">
+        <div onKeyPress="return enterFormByKeyPress(event)">
+            <form id="addInfo" action="#" method="post">
                 <tr>
                     <td><b>Tags:</b></td>
                     {% for row in tagdb %}
                         <td>{{row.0}}</td>
-                        <td>{{row.1}}</td>
-                        <td>{{row.2}}</td>
-                        <td>{{row.3}}</td>
-                        <td>{{row.4}}</td>
-                        <td>{{row.5}}</td>
-                        <td>{{row.6}}</td>
-                        <td>{{row.7}}</td>
                     {% endfor %}
                 </tr>
                 <br>
-
-                <textarea name="userTag" placeholder="Enter a tag" style="height:20px;width:80px"></textarea>
-                <br>
-                <textarea name="userComment" placeholder="Enter a comment"></textarea>
-                <br>
-                <p><input type="submit" value="submit"/></p>
+                    <textarea id="userTag" name="userTag" placeholder="Enter a tag" style="height:20px;width:80px"></textarea>
+                    <br>
+                    <textarea id="userComment" name="userComment" placeholder="Enter a comment"></textarea>
+                    <br>
+                    <p><input onclick="enterForm()"type="submit" value="submit"/></p>
             </form>
+        </div>
         {% endblock %}
-
-        <!-- <textarea id="userComment" placeholder="Enter a comment"></textarea>
-        <br>
-        <button onclick="saveComment()">Save Comment</button>
-        <br><br><br> -->
 
         {% for row in commentdb %}
         
@@ -112,74 +80,44 @@
     </div>
 
     <script>
-        // window.onload = function (){
-        //     if(isloggedin){
-        //         // document.getElementById('isnotloggedin').style.display = "none";
-        //         // document.getElementById('isloggedin').style.display = "";
-        //         document.getElementById("isnotloggedin").hidden=false;
-        //         document.getElementById("isloggedin").hidden=true
-        //     }
-        //     else{
-        //         // document.getElementById('isloggedin').style.display = "none";
-        //         // document.getElementById('isnotloggedin').style.display = "";
-        //         document.getElementById("isnotloggedin").hidden=true;
-        //         document.getElementById("isloggedin").hidden=false
-        //     }
-        // }
-        // import { addComment } from 'sqlconnect.js';
-        // reloads the page, allowing for the use of url parameters for searching
         function redirect() {
             // alert();
             const searchTerm = document.getElementById('searchTerm').value.toLowerCase();
             const searchColumn = document.getElementById('searchColumn').value;
-            // alert("search.html?q="+searchColumn+'&'+searchTerm);
             window.location.href="search.html?q="+searchColumn+'.'+searchTerm;
         }
 
-        function saveComment() {
-            const userComment = document.getElementById('userComment').value;
-            // alert(userComment);
-            const dateTime = getDateTime();
-            addComment(userComment, dateTime);
-            location.reload();
-
+        function enterFormByKeyPress(e) {
+            if((e && e.keyCode == 13) || e == 0) {
+                enterForm();
+            }
         }
 
-        function addComment(comment){ // this function sourced from w3schools
-            var mysql = require('mysql'); // TODO: fix this, this line doesnt work !!
+        function enterForm() {
+            const comment = document.getElementById("userComment").value;
+            const tag = document.getElementById("userTag").value;
+            
+            if (tag && comment) {
+                if (confirm("Confirm form submission:\nTag to add: " + tag + "\nComment to add: " + comment)) {
+                    document.forms.addInfo.submit();
+                }
+            }
 
-            var con = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "password"
-            });
+            else if (tag) {
+                if (confirm("Confirm form submission:\nTag to add: " + tag)){
+                    document.forms.addInfo.submit();
+                }
+            }
 
-            con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!");
-
-            const dateTime = getDateTime();
-
-            var sql = "INSERT INTO comments (ISBN, Comment, DateTime, User) VALUES ('" + isbn + "', '" + comment +"', '" + dateTime + "', testuser')";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
-                console.log("1 record inserted");
-            });
-            });
-
-            location.reload();
+            else if (comment) {
+                if (confirm("Confirm form submission:\nComment to add: " + comment)) {
+                    document.forms.addInfo.submit();
+                }
+            }
+            else {
+                alert("Please enter tag or comment for form submission" + e)
+            }
         }
-
-        function getDateTime() { // this function sourced from shecodes
-            // create a new `Date` object
-            const now = new Date();
-
-            // get the current date and time as a string
-            const currentDateTime = now.toLocaleString();
-
-            return currentDateTime;
-        }
-
     </script>
 
 </body>
