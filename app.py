@@ -95,6 +95,8 @@ def searchTerm():
         
         # if there are no specified search parameters, display all entries
         else:
+            
+            # checking for search by author
             if (request.args.get("q")):
                 
                 id = request.args.get("q")
