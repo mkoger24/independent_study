@@ -15,7 +15,7 @@
             <a href="home.html">
                 <div class="header" style="font-size: medium;">Mae's Digital Library</div>
             </a>
-            <form action="#" method="post">
+            <form id="searchDatabase" action="#" method="post">
                 <label for="searchColumn" style="font-size: medium;">Search by Column:</label>
                 <select name="searchColumn"id="searchColumn">
                     <option value="BookTitle">Title</option>
@@ -42,7 +42,9 @@
                 <tr>
                     <td id="{{row.0}}" onclick='details({{row.0}})' style="cursor: pointer;">{{row.0}}</td>
                     <td id="{{row.0}}" onclick='details({{row.0}})' style="cursor: pointer;">{{row.2}}</td>
-                    <td id="{{row.3}}" onclick='searchAuthor({{row.3}})' style="cursor: pointer;">{{row.3}}</td>
+                    <!-- <td id="{{row.3}}">{{row.3}}</td> -->
+                    <!-- <td id="{{row.3}}" onclick='searchAuthor('{{row.3}}')' style="cursor: pointer;">{{row.3}}</td> -->
+                    <td id="{{row.3}}" onclick='searchAuthor({{row.0}})' style="cursor: pointer;">{{row.3}}</td>
                     <td>{{row.4}}</td>
                 </tr>
                 {% endfor %}
@@ -64,9 +66,17 @@
                 window.location.href="details.html?q="+id;
             }
 
-            function searchAuthor(author) {
-                alert(author);
-                // window.location.href="search.html?q=Author%"+author;
+            function searchAuthor(id) {
+                // alert(encodedAuthor);
+                // const author = decodeURIComponent(encodedAuthor);
+                // alert(author);
+
+                // document.searchDatabase.myinput.value = 'Author';
+                // searchDatabase.elements["Author"].value = author;
+
+                // document.forms.searchDatabase.submit()
+                window.location.href="search.html?q="+id;
+                // window.location.href="author.html?q=";
             }
         </script>
 

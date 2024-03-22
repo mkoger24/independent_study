@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, send_file, redirect, request#, abortr
 import mysql.connector
 import datetime
+import string
 
 # establish connection to sql server
 mydb = mysql.connector.connect( 
@@ -94,6 +95,22 @@ def searchTerm():
         
         # if there are no specified search parameters, display all entries
         else:
+            if (request.args.get("q")):
+                
+                id = request.args.get("q")
+                getAuthor = "SELECT Author FROM books WHERE id like " + id + ";"
+                mycursor = mydb.cursor() 
+                mycursor.execute(getAuthor) 
+                authorTuple = mycursor.fetchall()
+                authorList = authorTuple[0]
+                authorString = authorList[0]
+
+                query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books WHERE Author like '%" + authorString + "%';"
+                mycursor = mydb.cursor() 
+                mycursor.execute(query) 
+                dbhtml = mycursor.fetchall() 
+                return render_template("search.html", dbhtml = dbhtml)
+
             query = "SELECT id, ElectronicISBN, BookTitle, Author, CopyrightYear FROM books;"
             mycursor = mydb.cursor() 
             mycursor.execute(query) 
