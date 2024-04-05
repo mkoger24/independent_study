@@ -14,4 +14,4 @@ Once the virtual environment is activated, use the command ```pip install -r req
 
 #### SQL Database
 
-To create the database used for this application in SQL, run the script ```books.sql```. This will create the tables used in the site: **books**, **comments**, and **tags**
+To create the database used for this application in SQL, run the script ```books.sql```. This will create the tables used in the site: **books**, **comments**, and **tags**.
