@@ -99,8 +99,10 @@
             
             if (tag && comment) {
                 if (confirm("Confirm form submission:\nTag to add: " + tag + "\nComment to add: " + comment)) {
+                    console.log("comment and tag confirmed")
                     document.forms.addInfo.submit();
                 }
+                console.log("comment and tag not confirmed")
             }
 
             else if (tag) {
