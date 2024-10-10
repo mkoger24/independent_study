@@ -4,8 +4,7 @@
 
 ### Mae Koger
 
-This software aims to create an Integrated Library System (ILS) for the use of searching, surfing, and collaborating on literature materials in an academic setting, allowing users to interact with one another. This encourages academic conversation about papers, articles, and books stored in the ILS. This software is intended for use in an academic library for collaboration among students and faculty. 
-
+This software aims to create an Integrated Library System (ILS) for the use of searching, surfing, and collaborating on literature materials in an academic setting, allowing users to interact with one another. This encourages academic conversation about papers, articles, and books stored in the ILS. This software is intended for use in an academic library for collaboration among students and faculty. See ```2024_koger_mae.pdf``` for more information about this project and the research I conducted in the process.
 #### Environment Setup
 
 To get started, create a virtual environment by using the command ```python -m venv venv```. The virtual environment can be activated with the command ```source myvenv/bin/activate``` and terminated with ```deactivate```.
